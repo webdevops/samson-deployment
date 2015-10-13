@@ -1,0 +1,15 @@
+########################
+## Default
+########################
+
+Host *
+    Compression          yes
+    CompressionLevel     6
+    TCPKeepAlive         yes
+    KeepAlive            yes
+    ServerAliveInterval  60
+    ForwardAgent         no
+
+########################
+## Server
+########################

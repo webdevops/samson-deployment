@@ -4,13 +4,18 @@ ENV PATH             /opt/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/b
 ENV PYTHONPATH       /opt/ansible/lib
 ENV ANSIBLE_LIBRARY  /opt/ansible/library
 
+# Setup samson
 ADD config/database.yml /app/config/database.yml
 ADD config/samson.conf  /app/.env
 
-COPY bin/install-ansible.sh  /install-ansible.sh
-RUN  bash /install-ansible.sh
+# Install additional deployment packages
+COPY bin/install.sh  /install.sh
+RUN  bash /install.sh
 
+# Deploy ssh
+COPY config/ssh/ /root/.ssh/
+
+# Run
 COPY bin/entrypoint.sh       /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["samson"]

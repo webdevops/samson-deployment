@@ -4,6 +4,16 @@ trap 'echo sigterm ; exit' SIGTERM
 trap 'echo sigkill ; exit' SIGKILL
 
 #############################
+## Fix rights
+#############################
+
+# Default rights for /root/.ssh
+if [ -d /root/.ssh ]; then
+    find /root/.ssh/ -type d -print0 | xargs -0 --no-run-if-empty chmod 700
+    find /root/.ssh/ -type f -print0 | xargs -0 --no-run-if-empty chmod 600
+fi
+
+#############################
 ## COMMAND
 #############################
 
