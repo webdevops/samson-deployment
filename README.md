@@ -2,11 +2,11 @@
 
 Deployment web ui with Ansible Ansistrano support with MySQL backend
 
-* [Samson](https://github.com/zendesk/samson)
+* [Samson deployment web ui](https://github.com/zendesk/samson)
 * [Ansible Ansistrano](https://github.com/ansistrano)
 
 
 ## Setup
 
-* Edit samson.conf in `docker/samson/config/samson.conf`
+* Edit `docker/samson/config/samson.conf` (setup GitHub credentials)
 * Run `docker-compose up -d`
