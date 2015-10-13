@@ -1,0 +1,11 @@
+<%
+  uri = URI(ENV['MYSQL_URL'] || 'mysql://samson:samson@mysql:3306/samson')
+  uri.scheme = 'mysql2'
+%>
+
+development:
+  url: <%= uri %>
+
+test:
+  <% uri.path = '/samson' %>
+  url: <%= uri %>
