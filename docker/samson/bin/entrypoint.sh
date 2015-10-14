@@ -13,6 +13,9 @@ if [ -d /root/.ssh ]; then
     find /root/.ssh/ -type f -print0 | xargs -0 --no-run-if-empty chmod 600
 fi
 
+# Set executable right for deployment
+chmod +x /opt/deployment/deploy
+
 #############################
 ## COMMAND
 #############################
