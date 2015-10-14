@@ -10,3 +10,15 @@ Deployment web ui with Ansible Ansistrano support with MySQL backend
 
 * Edit `docker/samson/config/samson.conf` (setup GitHub credentials)
 * Run `docker-compose up -d`
+
+## Easy deployment
+
+For an easy project independed deployment you can use the predefined deployment runner (based on Ansistrano).
+
+Use following as deployment command:
+
+```
+export DEPLOYMENT_INVENTORY=vagrant
+export DEPLOYMENT_TARGET=/var/www/target-deployment-path/
+/opt/deployment/deploy
+```
