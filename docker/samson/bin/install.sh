@@ -22,6 +22,7 @@ fi
 
 # Default deployment tools
 apt-get install -y \
+    sshpass \
     git \
     rsync
 
