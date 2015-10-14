@@ -4,6 +4,8 @@ main:
     - mysql
   ports:
     - 9080:9080
+  volumes:
+    - ./deployment:/opt/deployment/
   env_file:
     - docker-env.yml
 
