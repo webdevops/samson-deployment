@@ -1,6 +1,6 @@
 FROM zendesk/samson
 
-ENV PATH             /opt/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/:/app/bin/
+ENV PATH             /opt/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/:/app/bin/:/opt/deployment
 ENV PYTHONPATH       /opt/ansible/lib
 ENV ANSIBLE_LIBRARY  /opt/ansible/library
 
@@ -12,7 +12,7 @@ ADD config/samson.conf  /app/.env
 COPY bin/install.sh  /install.sh
 RUN  bash /install.sh
 
-# Deploy ssh
+# Deploy ssh configuration/keys
 COPY config/ssh/ /root/.ssh/
 
 # Run
