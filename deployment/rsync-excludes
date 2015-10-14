@@ -1,0 +1,4 @@
+.git*
+.svn*
+Packages
+node_modules

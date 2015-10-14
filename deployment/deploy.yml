@@ -1,0 +1,13 @@
+---
+- name: Deployment
+  hosts: all
+  vars:
+    ansistrano_deploy_from: "{{ lookup('env','DEPLOYMENT_SOURCE') }}"
+    ansistrano_deploy_to: "{{ lookup('env','DEPLOYMENT_TARGET') }}"
+
+    ansistrano_keep_releases: 3
+    ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes"
+
+    ansistrano_before_setup_tasks_file: "{{ playbook_dir }}/tasks/build.yml"
+  roles:
+    - { role: carlosbuenosvinos.ansistrano-deploy }
