@@ -9,7 +9,10 @@ Deployment web ui with Ansible Ansistrano support with MySQL backend
 ## Setup
 
 * Edit `docker/samson/config/samson.conf` (setup GitHub credentials)
+* Add ssh keys to `samson/ssh` (will be deployed to `/root/.ssh`)
 * Run `docker-compose up -d`
+
+
 
 ## Easy deployment
 
