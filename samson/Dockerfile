@@ -16,7 +16,7 @@ RUN  bash /install.sh
 COPY deployment/  /opt/deployment/
 
 # Deploy ssh configuration/keys
-COPY conf/ssh/    /root/.ssh/
+COPY ssh/    /root/.ssh/
 
 # Run
 COPY bin/entrypoint.sh       /entrypoint.sh
