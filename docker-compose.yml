@@ -1,17 +1,15 @@
 main:
-  build: docker/samson
+  build: samson
   links:
     - mysql
   ports:
     - 9080:9080
-  volumes:
-    - ./deployment:/opt/deployment/
   env_file:
     - docker-env.yml
 
 mysql:
-  build: docker/mysql
+  build: mysql
   ports:
-    - 13306:3306
+    - 23306:3306
   env_file:
     - docker-env.yml
