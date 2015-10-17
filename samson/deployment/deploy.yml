@@ -2,8 +2,10 @@
 - name: Deployment
   hosts: all
   vars:
-    ansistrano_deploy_from: "{{ lookup('env','DEPLOYMENT_SOURCE') }}"
-    ansistrano_deploy_to: "{{ lookup('env','DEPLOYMENT_TARGET') }}"
+    ansistrano_deploy_from:  "{{ lookup('env','DEPLOYMENT_DEPLOY_FROM') }}"
+    ansistrano_deploy_to:    "{{ lookup('env','DEPLOYMENT_DEPLOY_TO') }}"
+    ansistrano_shared_paths: "{{ lookup('env','DEPLOYMENT_SHARED_PATHS') }}"
+    ansistrano_current_dir:  "{{ lookup('env','DEPLOYMENT_CURRENT_DIR') }}"
 
     ansistrano_keep_releases: 3
     ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes"

@@ -3,16 +3,20 @@
 SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
 export PYTHONUNBUFFERED=1
-export DEPLOYMENT_SOURCE="`pwd`/"
+export DEPLOYMENT_DEPLOY_FROM="`pwd`/"
 
 if [ -z "$DEPLOYMENT_INVENTORY" ]; then
     echo "[ERROR] DEPLOYMENT_INVENTORY not set
     exit 1
 fi
 
-if [ -z "$DEPLOYMENT_TARGET" ]; then
-    echo "[ERROR] DEPLOYMENT_TARGET not set
+if [ -z "$DEPLOYMENT_DEPLOY_TO" ]; then
+    echo "[ERROR] DEPLOYMENT_DEPLOY_TO not set
     exit 1
+fi
+
+if [ -z "$DEPLOYMENT_CURRENT_DIR" ]; then
+    export DEPLOYMENT_CURRENT_DIR="current"
 fi
 
 
