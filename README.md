@@ -43,10 +43,10 @@ DEPLOYMENT_CURRENT_DIR      | Link name of the htdocs path (default: current)
 
 Variable                    | Description
 --------------------------- | ------------------------------------------------------
-Ansible inventory           | [samson/deployment/inventory](samson/deployment/inventory)
-Common project build task   | [samson/deployment/tasks/build.yml](samson/deployment/tasks/build.yml)
-Main deploy playbook        | [samson/deployment/deploy.yml](samson/deployment/deploy.yml)
-Common rsync excludes       | [samson/deployment/rsync-excludes](samson/deployment/rsync-excludes)
+Ansible inventory           | [deployment/inventory](deployment/inventory)
+Common project build task   | [deployment/tasks/build.yml](deployment/tasks/build.yml)
+Main deploy playbook        | [deployment/deploy.yml](deployment/deploy.yml)
+Common rsync excludes       | [deployment/rsync-excludes](deployment/rsync-excludes)
 
 
 ## Project specific deployment
