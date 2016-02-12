@@ -1,0 +1,5 @@
+---
+
+SSH:
+  known_hosts:
+    - { hostname: "github.com" }

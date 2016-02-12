@@ -1,0 +1,21 @@
+---
+
+- include_vars: /app/provision.yml
+
+- file:
+    path:  ~application/.ssh
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: directory
+    mode:  0700
+
+- file:
+    path:  ~application/.ssh/known_hosts
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: touch
+    mode:  0644
+
+- name: Save ssh fingerprints from known hosts
+  shell: ssh-keyscan -H {{ item.hostname }} >> ~application/.ssh/known_hosts
+  with_items: SSH.known_hosts
