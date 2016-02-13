@@ -2,9 +2,15 @@
 
 Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
 
+Installed packages:
 * [Samson deployment web ui](https://github.com/zendesk/samson)
-* [Ansible Ansistrano](https://github.com/ansistrano)
-
+* [Ansible](https://www.ansible.com/) with [Ansistrano](https://github.com/ansistrano)
+* [PHP Deployer](http://deployer.org/)
+* git
+* rsync
+* docker & docker-compose (as client)
+* gulp, grunt, bower
+* PHP cli & [composer](https://getcomposer.org/)
 
 ## Setup
 
@@ -63,11 +69,21 @@ Your deployment task should look like:
 
 ansible-playbook -i inventory/server deploy.yml
 
-## Installed packages
-* [Ansible](https://www.ansible.com/) with [Ansistrano](https://github.com/ansistrano)
-* [PHP Deployer](http://deployer.org/)
-* git
-* rsync
-* docker & docker-compose (as client)
-* gulp, grunt, bower
-* PHP cli & [composer](https://getcomposer.org/)
+## SSH - jump to servers behind gateways transparently
+
+With ssh you can jump over multiple servers transparently to reach servers behinde ssh gateways, use the `ssh/config` 
+file for configuration:
+
+```
+Host ssh-gateway
+    Hostname ssh-gateway.example.com
+    User foo
+
+Host server-behind-gateway
+    Hostname server-behind-ssh-gateway.example.com
+    User     root
+    ProxyCommand ssh ssh--server -W %h:%p
+```
+
+Now you can use `server-behind-gateway` as target host for SSH'ing at it will automatically jump over `ssh-gateway` to
+reach this server.
