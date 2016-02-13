@@ -16,4 +16,4 @@ RUN bash /opt/docker/bin/control.sh provision.role samson-deployment \
     && bash /opt/docker/bin/control.sh provision.role.finish samson-deployment \
     && bash /opt/docker/bin/bootstrap.sh
 
-VOLUME ["/tmp"]
+VOLUME ["/app/cached_repos/", "/tmp"]

@@ -1,0 +1,15 @@
+---
+
+- file:
+    path:  /tmp
+    owner: "root"
+    group: "root"
+    state: directory
+    mode:  01777
+
+- file:
+    path:  /app/cached_repos/
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: directory
+    mode:  0755

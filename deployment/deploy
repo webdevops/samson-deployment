@@ -16,11 +16,23 @@ if [ -z "$DEPLOYMENT_DEPLOY_TO" ]; then
 fi
 
 if [ -z "$DEPLOYMENT_DEPLOY_FROM" ]; then
-    export DEPLOYMENT_DEPLOY_FROM="$(pwd)"
+    export DEPLOYMENT_DEPLOY_FROM="$(pwd)/"
 fi
 
 if [ -z "$DEPLOYMENT_CURRENT_DIR" ]; then
     export DEPLOYMENT_CURRENT_DIR="current"
+fi
+
+if [ -z "$DEPLOYMENT_APPLICATION" ]; then
+    export DEPLOYMENT_APPLICATION="default"
+fi
+
+if [ -z "$DEPLOYMENT_OPTS" ]; then
+    DEPLOYMENT_OPTS=""
+fi
+
+if [ -z "$DEPLOYMENT_PLAYBOOK" ]; then
+    DEPLOYMENT_PLAYBOOK="deploy"
 fi
 
 echo ""
@@ -28,4 +40,4 @@ echo ""
 echo ""
 echo "# Executing Ansible"
 
-exec ansible-playbook -i "$SCRIPT_DIR/inventory/$DEPLOYMENT_INVENTORY" "$SCRIPT_DIR/deploy.yml" $*
+exec ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS $*

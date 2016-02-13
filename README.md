@@ -31,12 +31,14 @@ export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
 
 ### Deploy variables
 
-Variable                    | Description
---------------------------- | ------------------------------------------------------
-DEPLOYMENT_INVENTORY        | Inventory file for deployment **(required)**
-DEPLOYMENT_DEPLOY_TO        | Target deployment directory **(required)**
-DEPLOYMENT_CURRENT_DIR      | Link name of the htdocs path (default: current)
-
+Variable                       | Description
+------------------------------ | ------------------------------------------------------
+DEPLOYMENT_INVENTORY           | Inventory file for deployment **(required)**
+DEPLOYMENT_DEPLOY_TO           | Target deployment directory **(required)**
+DEPLOYMENT_CURRENT_DIR         | Link name of the htdocs path (default: current)
+DEPLOYMENT_APPLICATION         | Include variables for application (eg. for shared paths)
+DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/deployment/deploy`)
+DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
 
 ### Customization
 
