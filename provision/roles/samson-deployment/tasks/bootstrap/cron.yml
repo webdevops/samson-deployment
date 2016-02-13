@@ -1,0 +1,4 @@
+---
+
+- name: Add newline to crontab
+  raw: 'echo >> /etc/cron.d/samson-deployment'

@@ -1,0 +1,5 @@
+# m h  dom mon dow  user  command
+
+# Self update packages
+4   5    *   *   *  root  composer self-update &> /dev/null
+4   5    *   *   *  root  dep self-update &> /dev/null
