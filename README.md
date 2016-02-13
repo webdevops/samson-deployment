@@ -58,9 +58,10 @@ Your deployment task should look like:
 ansible-playbook -i inventory/server deploy.yml
 
 ## Installed packages
-* Ansible with Ansistrano
+* [Ansible](https://www.ansible.com/) with [Ansistrano](https://github.com/ansistrano)
+* [PHP Deployer](http://deployer.org/)
 * git
 * rsync
 * docker & docker-compose (as client)
 * gulp, grunt, bower
-* php cli & composer
+* PHP cli & [composer](https://getcomposer.org/)
