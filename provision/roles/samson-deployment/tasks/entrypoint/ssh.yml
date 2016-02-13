@@ -1,0 +1,21 @@
+---
+
+- file:
+    path:  /home/application/.ssh
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: directory
+    mode:  0700
+
+- name: Fix ssh directory rights
+  command: find /home/application/.ssh -type d -exec chmod 0700 {} \;
+
+- name: Fix ssh file rights
+  command: find /home/application/.ssh -type f -exec chmod 0600 {} \;
+
+- file:
+    path:  /home/application/.ssh/known_hosts
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: touch
+    mode:  0644

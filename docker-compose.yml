@@ -5,11 +5,9 @@ main:
   ports:
     - 9080:9080
   env_file:
-    - docker-env.yml
+    - etc/environment.yml
 
 mysql:
   build: mysql
-  ports:
-    - 23306:3306
   env_file:
-    - docker-env.yml
+    - etc/environment.yml

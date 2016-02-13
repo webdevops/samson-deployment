@@ -1,0 +1,6 @@
+---
+
+ansistrano_shared_paths:
+  - web/fileadmin
+  - web/uploads
+  - web/typo3conf/l10n

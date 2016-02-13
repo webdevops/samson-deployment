@@ -9,6 +9,7 @@ Host *
     KeepAlive            yes
     ServerAliveInterval  60
     ForwardAgent         no
+    BatchMode            yes
 
 ########################
 ## Server

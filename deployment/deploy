@@ -3,26 +3,41 @@
 SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
 export PYTHONUNBUFFERED=1
-export DEPLOYMENT_DEPLOY_FROM="`pwd`/"
+export ANSIBLE_CONFIG="/opt/deployment/ansible.cfg"
 
 if [ -z "$DEPLOYMENT_INVENTORY" ]; then
-    echo "[ERROR] DEPLOYMENT_INVENTORY not set
+    echo "[ERROR] DEPLOYMENT_INVENTORY not set"
     exit 1
 fi
 
 if [ -z "$DEPLOYMENT_DEPLOY_TO" ]; then
-    echo "[ERROR] DEPLOYMENT_DEPLOY_TO not set
+    echo "[ERROR] DEPLOYMENT_DEPLOY_TO not set"
     exit 1
+fi
+
+if [ -z "$DEPLOYMENT_DEPLOY_FROM" ]; then
+    export DEPLOYMENT_DEPLOY_FROM="$(pwd)/"
 fi
 
 if [ -z "$DEPLOYMENT_CURRENT_DIR" ]; then
     export DEPLOYMENT_CURRENT_DIR="current"
 fi
 
+if [ -z "$DEPLOYMENT_APPLICATION" ]; then
+    export DEPLOYMENT_APPLICATION="default"
+fi
 
-set -o pipefail
-set -o errtrace
-set -o nounset
-set -o errexit
+if [ -z "$DEPLOYMENT_OPTS" ]; then
+    DEPLOYMENT_OPTS=""
+fi
 
-ansible-playbook -i "$SCRIPT_DIR/inventory/$DEPLOYMENT_INVENTORY" "$SCRIPT_DIR/deploy.yml"
+if [ -z "$DEPLOYMENT_PLAYBOOK" ]; then
+    DEPLOYMENT_PLAYBOOK="deploy"
+fi
+
+echo ""
+echo ""
+echo ""
+echo "# Executing Ansible"
+
+exec ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS $*
