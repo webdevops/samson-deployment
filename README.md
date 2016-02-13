@@ -28,14 +28,6 @@ export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
 /opt/deployment/deploy
 ```
 
-## PHP deployer
-Use following as deployment command:
-
-```
-dep deploy
-```
-
-
 ### Deploy variables
 
 Variable                       | Description
@@ -55,6 +47,13 @@ Ansible inventory           | [deployment/inventory](deployment/inventory)
 Common project build task   | [deployment/tasks/build.yml](deployment/tasks/build.yml)
 Main deploy playbook        | [deployment/deploy.yml](deployment/deploy.yml)
 Common rsync excludes       | [deployment/rsync-excludes](deployment/rsync-excludes)
+
+## PHP deployer
+Use following as deployment command:
+
+```
+dep deploy
+```
 
 
 ## Project specific deployment
