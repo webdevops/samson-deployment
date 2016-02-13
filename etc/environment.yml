@@ -10,6 +10,10 @@
 # Samson settings
 MYSQL_URL=mysql://root:sql@mysql:3306/samson
 
+# Extra features:
+# (see https://github.com/zendesk/samson/blob/master/docs/extra_features.md#environment-and-deploy-group-managing)
+# DEPLOY_GROUP_FEATURE=1
+# JIRA_BASE_URL=http://jira.example.com/browse/
 
 #######################################
 # MySQL settings
