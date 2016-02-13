@@ -1,6 +1,6 @@
 # Samson based deployment server
 
-Deployment web ui with Ansible Ansistrano support with MySQL backend
+Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
 
 * [Samson deployment web ui](https://github.com/zendesk/samson)
 * [Ansible Ansistrano](https://github.com/ansistrano)
@@ -8,9 +8,9 @@ Deployment web ui with Ansible Ansistrano support with MySQL backend
 
 ## Setup
 
-* [Generate GitHub appliation key](https://github.com/settings/developers)
+* [Generate GitHub appliation key](https://github.com/settings/developers) 
 * [Generate GitHub access token](https://github.com/settings/tokens)
-* Edit `conf/samson.conf` (setup GitHub application key and access token)
+* Edit `conf/samson.conf` (setup GitHub credentials and SECRET_TOKEN)
 * Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`)
 * Run `docker-compose up -d`
 
