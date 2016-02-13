@@ -35,7 +35,6 @@ Variable                    | Description
 --------------------------- | ------------------------------------------------------
 DEPLOYMENT_INVENTORY        | Inventory file for deployment **(required)**
 DEPLOYMENT_DEPLOY_TO        | Target deployment directory **(required)**
-DEPLOYMENT_SHARED_PATHS     | Shared paths which will be linked after deployment
 DEPLOYMENT_CURRENT_DIR      | Link name of the htdocs path (default: current)
 
 
