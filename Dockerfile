@@ -9,9 +9,11 @@ ADD etc/provision.yml   /app/provision.yml
 COPY deployment/      /opt/deployment/
 
 # Deploy ssh configuration/keys
-COPY ssh/             /root/.ssh/
+COPY ssh/             /home/application/.ssh/
 
 COPY provision/       /opt/docker/provision/
 RUN bash /opt/docker/bin/control.sh provision.role samson-deployment \
     && bash /opt/docker/bin/control.sh provision.role.finish samson-deployment \
     && bash /opt/docker/bin/bootstrap.sh
+
+VOLUME ["/tmp"]

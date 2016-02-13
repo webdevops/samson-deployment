@@ -24,7 +24,7 @@ Use following as deployment command:
 
 ```
 export DEPLOYMENT_INVENTORY=vagrant
-export ANSISTRANO_DEPLOY_TO=/var/www/target-deployment-path/
+export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
 /opt/deployment/deploy
 ```
 

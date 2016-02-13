@@ -1,4 +1,4 @@
 ---
 
-- include: bootstrap/ssh-known_hosts.yml
-  when: SSH.known_hosts is defined
+- include: bootstrap/ssh.yml
+
