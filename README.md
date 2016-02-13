@@ -16,7 +16,7 @@ Deployment web ui with Ansible Ansistrano support with MySQL backend
 
 
 
-## Easy common deployment
+## Ansistrano deployment
 
 For an easy project independed deployment you can use the predefined deployment runner (based on Ansistrano).
 
@@ -26,6 +26,13 @@ Use following as deployment command:
 export DEPLOYMENT_INVENTORY=vagrant
 export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
 /opt/deployment/deploy
+```
+
+## PHP deployer
+Use following as deployment command:
+
+```
+dep deploy
 ```
 
 
