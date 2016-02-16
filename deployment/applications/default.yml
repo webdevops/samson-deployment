@@ -8,3 +8,8 @@ ansistrano_keep_releases: 3
 ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes"
 
 ansistrano_before_setup_tasks_file: "{{ playbook_dir }}/tasks/build.yml"
+ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/tasks/migration.yml"
+ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/tasks/finalize.yml"
+ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/tasks/cleanup.yml"
+
+deployment_makefile_task: 'deploy'

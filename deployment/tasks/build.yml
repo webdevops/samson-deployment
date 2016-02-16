@@ -2,9 +2,10 @@
 - name: Check if Makefile exists
   local_action: stat path="{{ ansistrano_deploy_from }}/Makefile"
   register: Makefile
+  when: deployment_makefile_task is defined and deployment_makefile_task != ''
 
-- name: Run 'make build'
-  local_action: command make build
+- name: Run 'make {{ deployment_makefile_task }}'
+  local_action: command make {{ deployment_makefile_task }}
   args:
     chdir: "{{ ansistrano_deploy_from }}"
   when: Makefile.stat.exists is defined and Makefile.stat.exists == True
