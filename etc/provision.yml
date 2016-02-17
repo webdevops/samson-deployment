@@ -1,5 +1,9 @@
 ---
 
 SSH:
+  # List of hostnames which should be automatically fetched for .ssh/known_hosts
+  # hostname: hostname or ip of remote host
+  # file:     pre-fetched ssh-keyscan server public key (otherwise there will be on-provision key fetch)
   known_hosts:
-    - { hostname: "github.com" }
+    - { hostname: "github.com", file: "github.com" }
+    # - { hostname: "your-host.example" }

@@ -17,10 +17,9 @@ Installed packages:
 * [Generate GitHub appliation key](https://github.com/settings/developers) 
 * [Generate GitHub access token](https://github.com/settings/tokens)
 * Edit `conf/samson.conf` (setup GitHub credentials, SECRET_TOKEN and DEFAULT_URL)
+* Edit `etc/provision.yml` to setup public key fetching of `.ssh/known_hosts`
 * Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`)
 * Run `docker-compose up -d`
-
-
 
 ## Ansistrano deployment
 
