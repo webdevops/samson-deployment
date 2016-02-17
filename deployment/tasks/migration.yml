@@ -1,1 +1,4 @@
 ---
+
+- include: migration/permissions.yml
+- include: migration/commands.yml

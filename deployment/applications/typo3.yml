@@ -1,5 +1,9 @@
 ---
 
+# Application name (for conditions)
+deployment_application: "typo3"
+
+# Shared paths to symlink to release dir
 ansistrano_shared_paths:
   - web/fileadmin
   - web/uploads
