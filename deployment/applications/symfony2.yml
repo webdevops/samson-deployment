@@ -1,0 +1,8 @@
+---
+
+# Application name (for conditions)
+deployment_application: "symfony3"
+
+# Shared paths to symlink to release dir
+ansistrano_shared_paths:
+  - app/logs
