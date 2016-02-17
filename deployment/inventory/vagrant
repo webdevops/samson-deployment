@@ -1,1 +1,1 @@
-192.168.56.2    ansible_connection=ssh      ansible_ssh_user=vagrant   become_user=root
+192.168.56.2    ansible_connection=ssh      ansible_ssh_user=vagrant
