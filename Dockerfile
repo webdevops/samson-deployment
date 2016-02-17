@@ -7,8 +7,8 @@ COPY etc/samson.conf     /app/.env
 COPY etc/provision.yml   /app/provision.yml
 COPY etc/known_hosts/    /root/.known_ssh_prefetched
 
-# Deploy deployment scripts
-COPY deployment/      /opt/deployment/
+# Deploy ansistrano scripts
+COPY ansistrano/      /opt/ansistrano/
 
 # Deploy ssh configuration/keys
 COPY ssh/             /home/application/.ssh/

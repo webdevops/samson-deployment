@@ -30,7 +30,7 @@ Use following as deployment command:
 ```
 export DEPLOYMENT_INVENTORY=vagrant
 export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
-/opt/deployment/deploy
+/opt/ansistrano/deploy
 ```
 
 ### Deploy variables
@@ -41,7 +41,7 @@ DEPLOYMENT_INVENTORY           | Inventory file for deployment **(required)**
 DEPLOYMENT_DEPLOY_TO           | Target deployment directory **(required)**
 DEPLOYMENT_CURRENT_DIR         | Link name of the htdocs path (default: current)
 DEPLOYMENT_APPLICATION         | Include variables for application (eg. for shared paths, eg `typo3` for including `deployment/applications/typo3.yml`)
-DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/deployment/deploy`)
+DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/ansistrano/deploy`)
 DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
 
 ### Customization
