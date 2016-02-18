@@ -1,5 +1,7 @@
 FROM webdevops/samson-deployment
 
+ENV RAILS_ENV="production"
+
 # Setup
 COPY etc/crontab         /etc/cron.d/samson-deployment
 COPY etc/database.yml    /app/config/database.yml
