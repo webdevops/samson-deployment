@@ -63,7 +63,8 @@ Variable                       | Description
 DEPLOYMENT_INVENTORY           | Inventory file for deployment **(required)**
 DEPLOYMENT_DEPLOY_TO           | Target deployment directory **(required)**
 DEPLOYMENT_CURRENT_DIR         | Link name of the htdocs path (default: current)
-DEPLOYMENT_APPLICATION         | Include variables for application (eg. for shared paths, eg `typo3` for including `deployment/applications/typo3.yml`)
+DEPLOYMENT_APPLICATION         | Include variables for specific application (eg. for shared paths, eg `typo3` for including `deployment/applications/typo3.yml`)
+DEPLOYMENT_PROJECT             | Include variables for specific project (eg. for shared paths, eg `foobar` for including `deployment/projects/foobar.yml`)
 DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/ansistrano/deploy`)
 DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
 
@@ -71,10 +72,10 @@ DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
 
 Variable                    | Description
 --------------------------- | ------------------------------------------------------
-Ansible inventory           | [deployment/inventory](deployment/inventory)
-Common project build task   | [deployment/tasks/build.yml](deployment/tasks/build.yml)
-Main deploy playbook        | [deployment/deploy.yml](deployment/deploy.yml)
-Common rsync excludes       | [deployment/rsync-excludes](deployment/rsync-excludes)
+Ansible inventory           | [deployment/inventory](ansistrano/inventory)
+Common project build task   | [deployment/tasks/build.yml](ansistrano/tasks/build.yml)
+Main deploy playbook        | [deployment/deploy.yml](ansistrano/deploy.yml)
+Common rsync excludes       | [deployment/rsync-excludes](ansistrano/rsync-excludes)
 
 ## PHP deployer
 Use following as deployment command:

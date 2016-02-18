@@ -27,6 +27,11 @@ if [ -z "$DEPLOYMENT_APPLICATION" ]; then
     export DEPLOYMENT_APPLICATION="default"
 fi
 
+if [ -z "$DEPLOYMENT_PROJECT" ]; then
+    export DEPLOYMENT_PROJECT="default"
+fi
+
+
 if [ -z "$DEPLOYMENT_OPTS" ]; then
     DEPLOYMENT_OPTS=""
 fi
