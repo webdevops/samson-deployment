@@ -3,6 +3,12 @@
   uri.scheme = 'mysql2'
 %>
 
+production:
+  url: <%= uri %>
+
+staging:
+  url: <%= uri %>
+
 development:
   url: <%= uri %>
 
