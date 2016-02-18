@@ -23,7 +23,7 @@ ansistrano_shared_paths: []
 ansistrano_keep_releases: 3
 
 # Rsync extra paraemters (will be append to rsync command)
-ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes"
+ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes --no-o --no-g"
 
 # Hooks
 ansistrano_before_setup_tasks_file:   "{{ playbook_dir }}/tasks/build.yml"
