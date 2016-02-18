@@ -12,6 +12,23 @@ Installed packages:
 * gulp, grunt, bower
 * PHP cli & [composer](https://getcomposer.org/)
 
+### What?
+(from [ZenDesk/Samson repository](https://github.com/zendesk/samson))
+
+A web interface for deployments.
+
+**View the current status of all your projects:**
+
+![](http://f.cl.ly/items/3n0f0m3j2Q242Y1k311O/Samson.png)
+
+**Allow anyone to watch deploys as they happen:**
+
+![](http://cl.ly/image/1m0Q1k2r1M32/Master_deploy__succeeded_.png)
+
+**View all recent deploys across all projects:**
+
+![](http://cl.ly/image/270l1e3s2e1p/Samson.png)
+
 ## Setup
 
 * [Generate GitHub appliation key](https://github.com/settings/developers) 
