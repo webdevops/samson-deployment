@@ -3,7 +3,7 @@ main:
   links:
     - mysql
   ports:
-    - 9080:9080
+    - 9080:80
   env_file:
     - etc/environment.yml
 
