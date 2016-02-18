@@ -24,3 +24,14 @@ fix-restart:
 	docker-compose rm --force main
 	docker-compose build --no-cache main
 	docker-compose up -d
+
+generate-ssh-key:
+	if [ ! -f "./ssh/id_rsa" ]; then \
+		echo "Generating ssh key, will take some time ..."; \
+		ssh-keygen -b 6144 -N "" -C "Samson deployment service" -f "./ssh/id_rsa"; \
+	else \
+		echo ""; \
+		echo "[ERROR] SSH key already exists!"; \
+		echo ""; \
+		exit 1; \
+	fi

@@ -33,13 +33,15 @@ A web interface for deployments.
 
 * [Generate GitHub appliation key](https://github.com/settings/developers) 
 * [Generate GitHub access token](https://github.com/settings/tokens)
-* Edit `conf/samson.conf` 
+* Edit `conf/samson.conf`:
     * Set GitHub appliation credentials (`GITHUB_CLIENT_ID`, `GITHUB_SECRET`)
     * Set GitHub access token (`GITHUB_TOKEN`)
     * Set `SECRET_TOKEN` (random string with length of 128, can be generated with `bundle exec rake secret` inside docker container)
     * Set `DEFAULT_URL` (must be accessable url for SSO callbacks)
 * Edit `etc/provision.yml` to setup public key fetching of `.ssh/known_hosts`
-* Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`)
+    * Fixed known_host keys can be stored inside `etc/known_hosts` folder and can be generated with `ssh-keyscan -H HOSTNAME > etc/known_hosts/HOSTNAME` (very secure)
+    * All hosts without stored known_host keys will be automatically fetched when Dockerfile build is running (less secure)
+* Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`) or generate an new one with `make generate-ssh-key`
 * Run `docker-compose up -d` or `make restart`
 
 ## Ansistrano deployment
