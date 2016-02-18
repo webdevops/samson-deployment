@@ -1,6 +1,6 @@
 # Samson based deployment server
 
-Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
+[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
 
 Installed packages:
 * [Samson deployment web ui](https://github.com/zendesk/samson)
