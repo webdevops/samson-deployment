@@ -1,0 +1,56 @@
+---
+
+#############################
+# Ansistrano
+#############################
+
+# Rsync files from this directory (with trailing /)
+ansistrano_deploy_from: "{{ lookup('env','DEPLOYMENT_DEPLOY_FROM') }}"
+
+# Rsync files to this directory (with releases, shared and current folder)
+ansistrano_deploy_to: "{{ lookup('env','DEPLOYMENT_DEPLOY_TO') }}"
+
+# Folder name for the releases
+ansistrano_version_dir: "releases"
+
+# Softlink name for the current release (default "current")
+ansistrano_current_dir: "{{ lookup('env','DEPLOYMENT_CURRENT_DIR') }}"
+
+# Shared paths to symlink to release dir
+ansistrano_shared_paths: []
+
+# Number of releases to keep in your hosts, if 0, unlimited releases will be kept
+ansistrano_keep_releases: 3
+
+# Rsync extra paraemters (will be append to rsync command)
+ansistrano_rsync_extra_params: "--exclude-from={{ playbook_dir }}/rsync-excludes --no-o --no-g"
+
+# Hooks
+ansistrano_before_setup_tasks_file:   "{{ playbook_dir }}/tasks/build.yml"
+ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/tasks/migration.yml"
+ansistrano_after_symlink_tasks_file:  "{{ playbook_dir }}/tasks/finalize.yml"
+ansistrano_after_cleanup_tasks_file:  "{{ playbook_dir }}/tasks/teardown.yml"
+
+#############################
+# Deployment (Hooks)
+#############################
+
+# Set the deployment base directory (for running local tasks)
+deployment_base: "{{ lookup('env','DEPLOYMENT_DEPLOY_FROM') }}"
+
+# Run defined Makefile task (on deployment server, before rsync)
+deployment_makefile_task: "build"
+
+# Tasks for building up application (on deployment server, before rsync)
+deployment_build_tasks: []
+
+# Tasks for migration (before going live on remote server)
+deployment_migration_tasks: []
+
+# Application name (for conditions)
+deployment_application: "default"
+
+# Deployment permissions (on remote server)
+deployment_permission_user:  ""
+deployment_permission_group: ""
+deployment_permission_mode:  "u=rwX,g=rX,o=rX"

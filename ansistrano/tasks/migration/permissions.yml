@@ -1,0 +1,22 @@
+---
+
+- name: Set permissions (owner)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}"
+    owner: "{{ deployment_permission_user }}"
+    recurse: True
+  when: deployment_permission_user is defined and deployment_permission_user != ""
+
+- name: Set permissions (group)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}"
+    group: "{{ deployment_permission_group }}"
+    recurse: True
+  when: deployment_permission_group is defined and deployment_permission_group != ""
+
+- name: Set permissions (permissions)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}"
+    mode: "{{ deployment_permission_mode }}"
+    recurse: True
+  when: deployment_permission_mode is defined and deployment_permission_mode != ""

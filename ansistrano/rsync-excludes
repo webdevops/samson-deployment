@@ -1,0 +1,9 @@
+.git*
+.svn*
+Packages
+node_modules
+Makefile
+composer.*
+package.json
+gulpfile.js
+Gruntfile.js

@@ -4,5 +4,6 @@
   vars_files:
     - applications/default.yml
     - applications/{{ lookup('env','DEPLOYMENT_APPLICATION') }}.yml
+    - projects/{{ lookup('env','DEPLOYMENT_PROJECT') }}.yml
   roles:
     - { role: carlosbuenosvinos.ansistrano-deploy }

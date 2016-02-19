@@ -1,0 +1,4 @@
+---
+
+- include: build/makefile.yml
+- include: build/commands.yml
