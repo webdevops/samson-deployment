@@ -47,6 +47,9 @@ deployment_build_tasks: []
 # Tasks for migration (before going live on remote server)
 deployment_migration_tasks: []
 
+# Tasks for finalize (after going live on remote server)
+deployment_finalize_tasks: []
+
 # Application name (for conditions)
 deployment_application: "default"
 

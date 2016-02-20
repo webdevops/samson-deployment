@@ -8,6 +8,11 @@ ansistrano_shared_paths:
   - web/fileadmin
   - web/uploads
   - web/typo3conf/l10n
+  - web/typo3temp
+
+# Tasks for finalize (after going live on remote server)
+deployment_finalize_tasks:
+  - "rm -rf web/typo3temp/Cache"
 
 # Deployment special file or directory permissions (on remote server)
 deployment_permissions:
