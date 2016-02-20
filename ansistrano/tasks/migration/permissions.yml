@@ -1,22 +1,54 @@
 ---
 
-- name: Set permissions (owner)
+#######################################
+# General permissions
+#######################################
+
+- name: Set permissions for all files (owner)
   file:
     path: "{{ ansistrano_release_path.stdout }}"
-    owner: "{{ deployment_permission_user }}"
+    owner: "{{ deployment_permission_owner }}"
     recurse: True
-  when: deployment_permission_user is defined and deployment_permission_user != ""
+  when: deployment_permission_user is defined and deployment_permission_owner != ""
 
-- name: Set permissions (group)
+- name: Set permissions for all files (group)
   file:
     path: "{{ ansistrano_release_path.stdout }}"
     group: "{{ deployment_permission_group }}"
     recurse: True
   when: deployment_permission_group is defined and deployment_permission_group != ""
 
-- name: Set permissions (permissions)
+- name: Set permissions for all files (permissions)
   file:
     path: "{{ ansistrano_release_path.stdout }}"
     mode: "{{ deployment_permission_mode }}"
     recurse: True
   when: deployment_permission_mode is defined and deployment_permission_mode != ""
+
+#######################################
+# Special file permissions
+#######################################
+
+- name: Set permission for special files (owner)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
+    owner: "{{ item.user }}"
+    recurse: "{{ item.recurse | default(False) }}"
+  with_items: deployment_permissions
+  when: deployment_permissions is defined and item.owner is defined
+
+- name: Set permission for special files (group)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
+    group: "{{ item.group }}"
+    recurse: "{{ item.recurse | default(False) }}"
+  with_items: deployment_permissions
+  when: deployment_permissions is defined and item.group is defined
+
+- name: Set permission for special files (mode)
+  file:
+    path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
+    mode: "{{ item.mode }}"
+    recurse: "{{ item.recurse | default(False) }}"
+  with_items: deployment_permissions
+  when: deployment_permissions is defined and item.mode is defined

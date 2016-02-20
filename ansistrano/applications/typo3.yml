@@ -8,3 +8,7 @@ ansistrano_shared_paths:
   - web/fileadmin
   - web/uploads
   - web/typo3conf/l10n
+
+# Deployment special file or directory permissions (on remote server)
+deployment_permissions:
+  - { path: "web/typo3conf/PackageStates.php", mode: "0666" }

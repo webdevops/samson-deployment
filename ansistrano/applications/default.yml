@@ -51,6 +51,9 @@ deployment_migration_tasks: []
 deployment_application: "default"
 
 # Deployment permissions (on remote server)
-deployment_permission_user:  ""
+deployment_permission_owner:  ""
 deployment_permission_group: ""
 deployment_permission_mode:  "u=rwX,g=rX,o=rX"
+
+# Deployment special file or directory permissions (on remote server)
+deployment_permissions: []
