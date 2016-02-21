@@ -1,13 +1,13 @@
 main:
   build: .
-  links:
-    - mysql
+#  links:
+#    - mysql
   ports:
-    - 9080:80
+    - 9080:9080
   env_file:
     - etc/environment.yml
 
-mysql:
-  build: mysql
-  env_file:
-    - etc/environment.yml
+#mysql:
+#  build: mysql
+#  env_file:
+#    - etc/environment.yml
