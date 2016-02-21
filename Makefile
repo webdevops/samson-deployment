@@ -19,10 +19,9 @@ rebuild:
 	docker-compose build
 	docker-compose up -d
 
-fix-restart:
-	docker-compose stop
-	docker-compose rm --force main
-	docker-compose build --no-cache main
+update:
+	docker pull webdevops/samson-deployment
+	docker-compose build
 	docker-compose up -d
 
 generate-ssh-key:
