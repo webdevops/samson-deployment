@@ -1,6 +1,7 @@
 FROM webdevops/samson-deployment
 
-ENV RAILS_ENV="production"
+ENV RAILS_ENV="staging"
+ENV PYTHONUNBUFFERED=1
 
 # Setup
 COPY etc/crontab         /etc/cron.d/samson-deployment
