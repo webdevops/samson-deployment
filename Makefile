@@ -24,7 +24,7 @@ update:
 	docker-compose build
 	docker-compose up -d
 
-generate-ssh-key:
+ssh-key:
 	if [ ! -f "./ssh/id_rsa" ]; then \
 		echo "Generating ssh key, will take some time ..."; \
 		ssh-keygen -b 6144 -N "" -C "Samson deployment service" -f "./ssh/id_rsa"; \
