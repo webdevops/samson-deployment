@@ -1,10 +1,11 @@
 # Samson based deployment server
 
-[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
+[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano, Capistrano and PHP Deployer support
 
 Installed packages:
 * [Samson deployment web ui](https://github.com/zendesk/samson)
 * [Ansible](https://www.ansible.com/) with [Ansistrano](https://github.com/ansistrano)
+* [Capistrano](http://capistranorb.com/)
 * [PHP Deployer](http://deployer.org/)
 * git
 * rsync
