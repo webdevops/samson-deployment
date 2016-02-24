@@ -8,8 +8,11 @@
     mode:  01777
 
 - file:
-    path:  /app/cached_repos/
+    path:  "{{ item }}"
     owner: "{{ APPLICATION_USER }}"
     group: "{{ APPLICATION_GROUP }}"
     state: directory
     mode:  0755
+  with_items:
+    - /app/cached_repos
+    - /app/db

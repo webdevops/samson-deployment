@@ -17,15 +17,14 @@ log:
 
 rebuild:
 	docker-compose build
-	docker-compose up -d
+	docker-compose up -d --force-recreate
 
-fix-restart:
-	docker-compose stop
-	docker-compose rm --force main
-	docker-compose build --no-cache main
-	docker-compose up -d
+update:
+	docker pull webdevops/samson-deployment
+	docker-compose build
+	docker-compose up -d --force-recreate
 
-generate-ssh-key:
+ssh-key:
 	if [ ! -f "./ssh/id_rsa" ]; then \
 		echo "Generating ssh key, will take some time ..."; \
 		ssh-keygen -b 6144 -N "" -C "Samson deployment service" -f "./ssh/id_rsa"; \

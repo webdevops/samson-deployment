@@ -23,11 +23,11 @@
     mode:  0644
 
 - name: Save ssh fingerprints from known hosts (online)
-  shell: ssh-keyscan -H {{ item.hostname }} >> /home/application/.ssh/known_hosts
+  shell: ssh-keyscan -p "{{ item.port | default(22) }}" {{ item.opts | default() }} -H "{{ item.hostname }}" >> /home/application/.ssh/known_hosts
   with_items: SSH.known_hosts
   when: SSH.known_hosts is defined and (item.file is not defined or item.file == "")
 
 - name: Save ssh fingerprints from known hosts (prefeched)
-  shell: cat /root/.known_ssh_prefetched/{{ item.file }} >> /home/application/.ssh/known_hosts
+  shell: cat "/root/.known_ssh_prefetched/{{ item.file }}" >> /home/application/.ssh/known_hosts
   with_items: SSH.known_hosts
   when: SSH.known_hosts is defined and (item.file is defined and item.file != "")

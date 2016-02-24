@@ -1,10 +1,11 @@
 # Samson based deployment server
 
-[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano and PHP Deployer support with MySQL backend
+[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano, Capistrano and PHP Deployer support
 
 Installed packages:
 * [Samson deployment web ui](https://github.com/zendesk/samson)
 * [Ansible](https://www.ansible.com/) with [Ansistrano](https://github.com/ansistrano)
+* [Capistrano](http://capistranorb.com/)
 * [PHP Deployer](http://deployer.org/)
 * git
 * rsync
@@ -41,7 +42,7 @@ A web interface for deployments.
 * Edit `etc/provision.yml` to setup public key fetching of `.ssh/known_hosts`
     * Fixed known_host keys can be stored inside `etc/known_hosts` folder and can be generated with `ssh-keyscan -H HOSTNAME > etc/known_hosts/HOSTNAME` (very secure)
     * All hosts without stored known_host keys will be automatically fetched when Dockerfile build is running (less secure)
-* Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`) or generate an new one with `make generate-ssh-key`
+* Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`) or generate an new one with `make ssh-key`
 * Run `docker-compose up -d` or `make restart`
 
 ## Ansistrano deployment
@@ -84,6 +85,16 @@ Use following as deployment command:
 dep deploy
 ```
 
+## Makefile
+
+Command                     | Description
+--------------------------- | ------------------------------------------------------
+`make restart`              | Restart Samson (and update/deploy configuration)
+`make start`                | Start Samson
+`make stop`                 | Stop Samson
+`make log`                  | Show logs
+`make update`               | Update Samson docker image (`docker pull`) and restart Samson
+`make ssh-key`              | Generate new ssh-key (will not overwrite if exists)
 
 ## Project specific deployment
 

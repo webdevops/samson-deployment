@@ -1,6 +1,6 @@
 ---
 
-- name: Run migration commands
+- name: Run migration tasks
   command: "{{ item }}"
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
