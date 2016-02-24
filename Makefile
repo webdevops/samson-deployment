@@ -17,12 +17,12 @@ log:
 
 rebuild:
 	docker-compose build
-	docker-compose up -d
+	docker-compose up -d --force-recreate
 
 update:
 	docker pull webdevops/samson-deployment
 	docker-compose build
-	docker-compose up -d
+	docker-compose up -d --force-recreate
 
 ssh-key:
 	if [ ! -f "./ssh/id_rsa" ]; then \
