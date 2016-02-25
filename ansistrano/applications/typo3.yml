@@ -13,3 +13,5 @@ ansistrano_shared_paths:
 deployment_permissions:
   - { path: "web/typo3conf/PackageStates.php", mode: "0664" }
   - { path: "web/typo3conf/LocalConfiguration.php", mode: "0660" }
+
+deployment_web_path_prefix: "/web"

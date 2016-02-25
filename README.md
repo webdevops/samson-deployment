@@ -68,6 +68,7 @@ DEPLOYMENT_APPLICATION         | Include variables for specific application (eg.
 DEPLOYMENT_PROJECT             | Include variables for specific project (eg. for shared paths, eg `foobar` for including `deployment/projects/foobar.yml`)
 DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/ansistrano/deploy`)
 DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
+DEPLOYMENT_URL                 | URL to website (required for eg. PHP opcode cache clearing)
 
 ### Customization
 

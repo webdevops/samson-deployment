@@ -1,0 +1,22 @@
+---
+
+- name: Get PHP opcode-cache clear script name
+  set_fact:
+    deployment_php_opcode_clear_remove_file: "opcode-clear.{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}.php"
+
+- name: Deploy PHP opcode-cache clear script
+  copy:
+    src:  files/opcode-clear.php
+    dest: "{{ ansistrano_release_path.stdout }}/{{ deployment_web_path_prefix }}/{{ deployment_php_opcode_clear_remove_file }}"
+    mode: 0444
+
+- name: Execute PHP opcode-cache clear
+  local_action: command curl --silent --retry 10 --fail "{{ deployment_web_url }}/{{ deployment_php_opcode_clear_remove_file }}"
+
+- name: Remove PHP opcode-cache clear script
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ansistrano_release_path.stdout }}/{{ deployment_web_path_prefix }}/{{ deployment_php_opcode_clear_remove_file }}"
+    - "/tmp/.{{ deployment_php_opcode_clear_remove_file }}"
