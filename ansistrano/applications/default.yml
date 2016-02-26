@@ -69,3 +69,6 @@ deployment_web_path_prefix: ""
 
 # Enable PHP opcode cache clearing (requires deployment_web_url)
 deployment_php_opcode_cache_clear: False
+
+# Options for curl
+deployment_curl_opts: ""
