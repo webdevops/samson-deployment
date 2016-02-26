@@ -14,4 +14,8 @@ deployment_permissions:
   - { path: "web/typo3conf/PackageStates.php", mode: "0664" }
   - { path: "web/typo3conf/LocalConfiguration.php", mode: "0660" }
 
+# Path Prefix for document root
 deployment_web_path_prefix: "/web"
+
+# Enable PHP opcode cache clearing (requires deployment_web_url)
+deployment_php_opcode_cache_clear: True
