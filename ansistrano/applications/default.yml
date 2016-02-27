@@ -60,3 +60,15 @@ deployment_permission_mode:  "u=rwX,g=rX,o=rX"
 
 # Deployment special file or directory permissions (on remote server)
 deployment_permissions: []
+
+# URL to instance (eg. for PHP OpCode cache clearing)
+deployment_web_url: "{{ lookup('env','DEPLOYMENT_URL') }}"
+
+# Path Prefix for document root
+deployment_web_path_prefix: ""
+
+# Enable PHP opcode cache clearing (requires deployment_web_url)
+deployment_php_opcode_cache_clear: False
+
+# Options for curl
+deployment_curl_opts: ""
