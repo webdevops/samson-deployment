@@ -117,7 +117,7 @@ Host ssh-gateway
 Host server-behind-gateway
     Hostname server-behind-ssh-gateway.example.com
     User     root
-    ProxyCommand ssh ssh--server -W %h:%p
+    ProxyCommand ssh ssh-gateway -W %h:%p
 ```
 
 Now you can use `server-behind-gateway` as target host for SSH'ing at it will automatically jump over `ssh-gateway` to
