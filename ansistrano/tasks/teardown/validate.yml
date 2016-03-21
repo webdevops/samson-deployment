@@ -1,0 +1,4 @@
+---
+
+- name: Validating website
+  local_action: command curl --silent --retry 10 --fail {{ deployment_curl_opts }} "{{ deployment_web_url }}"
