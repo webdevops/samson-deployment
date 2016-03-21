@@ -12,6 +12,8 @@
 
 - name: Execute PHP opcode-cache clear
   local_action: command curl --silent --retry 10 --fail {{ deployment_curl_opts }} "{{ deployment_web_url }}/{{ deployment_php_opcode_clear_remove_file }}"
+  with_sequence: count=10
+  ignore_errors: yes
 
 - name: Remove PHP opcode-cache clear script
   file:
