@@ -1,5 +1,0 @@
----
-
-- include: bootstrap/ssh.yml
-- include: bootstrap/cron.yml
-

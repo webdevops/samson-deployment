@@ -1,9 +1,5 @@
 ---
 
-- include: bootstrap.yml
+- include: build.yml
   tags:
-    - bootstrap
-
-- include: entrypoint.yml
-  tags:
-    - entrypoint
+    - build
