@@ -24,6 +24,13 @@ update:
 	docker-compose build
 	docker-compose up -d --force-recreate
 
+shell:
+	docker exec -it -u application $$(docker-compose ps -q app) /bin/bash
+
+root:
+	docker exec -it -u root $$(docker-compose ps -q app) /bin/bash
+
+
 ssh-key:
 	if [ ! -f "./ssh/id_rsa" ]; then \
 		echo "Generating ssh key, will take some time ..."; \
