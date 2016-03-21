@@ -1,7 +1,8 @@
 ---
 
-- include: finalize/commands.yml
-
 - include: finalize/php-opcode-cache.yml
   when: (deployment_php_opcode_cache_clear is defined and deployment_php_opcode_cache_clear) and
         (deployment_web_url is defined and deployment_web_url != "")
+
+- include: finalize/commands.yml
+
