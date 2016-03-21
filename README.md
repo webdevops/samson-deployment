@@ -96,6 +96,8 @@ Command                     | Description
 `make log`                  | Show logs
 `make update`               | Update Samson docker image (`docker pull`) and restart Samson
 `make ssh-key`              | Generate new ssh-key (will not overwrite if exists)
+`make shell`                | Jump into shell inside the container (as `application` user)
+`make root`                 | Jump into shell inside the container (as `root` user)
 
 ## Project specific deployment
 
