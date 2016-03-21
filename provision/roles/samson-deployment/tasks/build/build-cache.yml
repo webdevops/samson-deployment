@@ -1,0 +1,26 @@
+---
+
+- file:
+    path:  "{{ item }}"
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: directory
+    mode:  0755
+  with_items:
+    - /app/build_cache
+    - /app/build_cache/composer
+    - /app/build_cache/npm
+
+- name: Link composer cache to /app/build_cache
+  file:
+    src:   /app/build_cache/composer
+    dest:  /home/application/.composer
+    state: link
+    force: yes
+
+- name: Link npm cache to /app/build_cache
+  file:
+    src:   /app/build_cache/npm
+    dest:  /home/application/.npm
+    state: link
+    force: yes
