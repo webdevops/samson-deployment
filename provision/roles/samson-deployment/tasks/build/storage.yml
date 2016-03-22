@@ -1,6 +1,7 @@
 ---
 
-- file:
+- name: Create storage directories
+  file:
     path:  "{{ item }}"
     owner: "{{ APPLICATION_USER }}"
     group: "{{ APPLICATION_GROUP }}"
@@ -8,10 +9,17 @@
     mode:  0755
   with_items:
     - /storage
+    - /storage/db
     - /storage/cached_repos
     - /storage/build_cache
-    - /storage/build_cache/composer
     - /storage/build_cache/npm
+    - /storage/build_cache/composer
+
+- file:
+    path:  "{{ item }}"
+    state: absent
+  with_items:
+    - /app/cached_repos
 
 - name: Link caching directories to /storage
   file:

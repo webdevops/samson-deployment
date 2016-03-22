@@ -2,6 +2,6 @@
 
 - include: build/ssh.yml
 - include: build/cron.yml
-- include: build/build-cache.yml
+- include: build/storage.yml
 - include: build/permissions.yml
 
