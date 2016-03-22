@@ -73,5 +73,5 @@ deployment_php_opcode_cache_clear: False
 # Options for curl
 deployment_curl_opts: ""
 
-# Enable for final page validate check via curl request (requires deployment_web_url)
-deployment_validate_page: False
+# Enable for final website validation check via curl request (requires deployment_web_url)
+deployment_validate_website: False

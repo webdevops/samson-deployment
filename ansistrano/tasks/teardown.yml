@@ -1,5 +1,5 @@
 ---
 
 - include: teardown/validate.yml
-  when: deployment_validate_page is defined and
+  when: (deployment_validate_website is defined and deployment_validate_website) and
         (deployment_web_url is defined and deployment_web_url != "")
