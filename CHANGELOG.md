@@ -6,6 +6,7 @@ This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webd
 ### Changed
 - TYPO3 deployment support 
 - rsync excludes because of deployment issues
+- Moved /app/db to /storage/db (make backup before update!)
 
 ### Removed
 - MySQL support, switched to sqlite because of stability issues
