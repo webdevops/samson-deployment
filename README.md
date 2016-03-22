@@ -10,7 +10,8 @@ Installed packages:
 * git
 * rsync
 * docker & docker-compose (as client)
-* gulp, grunt, bower
+* npm, gulp, grunt, bower
+* java (jre 7)
 * PHP cli & [composer](https://getcomposer.org/)
 
 ### What?
