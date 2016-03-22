@@ -22,4 +22,4 @@ RUN bash /opt/docker/bin/control.sh provision.role.build samson-deployment \
     && /opt/docker/bin/control.sh service.enable cron \
     && bash /opt/docker/bin/bootstrap.sh
 
-VOLUME ["/app/cached_repos", "/app/db", "/tmp", "/app/build_cache"]
+VOLUME ["/tmp", "/storage"]
