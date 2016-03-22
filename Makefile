@@ -28,13 +28,13 @@ update:
 backup:
 	rm -rf ./backup/db/
 	docker exec -it -u root $$(docker-compose ps -q app) service samson stop
-	docker cp $$(docker-compose ps -q app):/app/db/ ./backup/db/
+	docker cp $$(docker-compose ps -q app):/storage/db/ ./backup/db/
 	docker exec -it -u root $$(docker-compose ps -q app) service samson start
 
 restore:
 	docker exec -it -u root $$(docker-compose ps -q app) service samson stop
-	docker cp ./backup/db/ $$(docker-compose ps -q app):/app/db/
-	docker exec -it -u root $$(docker-compose ps -q app) chown -R application:application /app/db/
+	docker cp ./backup/db/ $$(docker-compose ps -q app):/storage/db/
+	docker exec -it -u root $$(docker-compose ps -q app) chown -R application:application /storage/db/
 	docker exec -it -u root $$(docker-compose ps -q app) service samson start
 
 shell:
