@@ -14,5 +14,6 @@
     state: directory
     mode:  0755
   with_items:
-    - /app/cached_repos
+    - /app
     - /app/db
+
