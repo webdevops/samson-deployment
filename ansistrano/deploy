@@ -83,7 +83,7 @@ calcDuration
 ansibleDeployStatus
 
 echo ""
-echo " Duration: ${DEPLOYMENT_DURATION}"
+echo " => Duration: ${DEPLOYMENT_DURATION}"
 echo ""
 echo ""
 
