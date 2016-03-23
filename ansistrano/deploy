@@ -58,7 +58,7 @@ function calcDuration() {
 }
 
 function runDeployment() {
-    ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS $*
+    ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS "$@"
     export DEPLOYMENT_RC="$?"
 }
 
@@ -74,7 +74,7 @@ echo "# Executing Ansistrano"
 SECONDS=0
 
 ## run deployment
-runDeployment
+runDeployment "$@"
 
 ## calculate duration
 calcDuration
