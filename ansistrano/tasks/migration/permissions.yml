@@ -34,7 +34,7 @@
     path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
     owner: "{{ item.user }}"
     recurse: "{{ item.recurse | default(False) }}"
-  with_items: deployment_permissions
+  with_items: "{{ deployment_permissions }}"
   when: deployment_permissions is defined and item.owner is defined
 
 - name: Set permission for special files (group)
@@ -42,7 +42,7 @@
     path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
     group: "{{ item.group }}"
     recurse: "{{ item.recurse | default(False) }}"
-  with_items: deployment_permissions
+  with_items: "{{ deployment_permissions }}"
   when: deployment_permissions is defined and item.group is defined
 
 - name: Set permission for special files (mode)
@@ -50,5 +50,5 @@
     path: "{{ ansistrano_release_path.stdout }}/{{ item.path }}"
     mode: "{{ item.mode }}"
     recurse: "{{ item.recurse | default(False) }}"
-  with_items: deployment_permissions
+  with_items: "{{ deployment_permissions }}"
   when: deployment_permissions is defined and item.mode is defined
