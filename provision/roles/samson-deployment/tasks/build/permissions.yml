@@ -1,19 +1,11 @@
 ---
 
 - file:
-    path:  /tmp
-    owner: "root"
-    group: "root"
-    state: directory
-    mode:  01777
-
-- file:
-    path:  "{{ item }}"
+    path:  "{{ item.path }}"
     owner: "{{ APPLICATION_USER }}"
     group: "{{ APPLICATION_GROUP }}"
-    state: directory
-    mode:  0755
+    state: "{{ item.state }}"
+    mode:  "{{ item.mode }}"
   with_items:
-    - /app
-    - /app/db
-
+    - { path: "/app",     state: "directory", mode: "0755" }
+    - { path: "/app/tmp", state: "directory", mode: "0755" }
