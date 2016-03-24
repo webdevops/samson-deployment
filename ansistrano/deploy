@@ -7,6 +7,11 @@ DEBUG=0
 export PYTHONUNBUFFERED=1
 export ANSIBLE_CONFIG="${SCRIPT_DIR}/ansible.cfg"
 
+## Read vars from .env
+if [[ -f "$(pwd)/.env" ]]; then
+    . "$(pwd)/.env"
+fi
+
 if [ -z "$DEPLOYMENT_INVENTORY" ]; then
     echo "[ERROR] DEPLOYMENT_INVENTORY not set"
     exit 1
@@ -42,6 +47,10 @@ if [ -z "$DEPLOYMENT_PLAYBOOK" ]; then
     DEPLOYMENT_PLAYBOOK="deploy"
 fi
 
+function displayEnvVars() {
+    env | grep DEPLOYMENT_ | sed -e 's/^/» /'
+}
+
 function ansibleDeployStatus() {
     if [[ "$DEBUG" -eq 0 ]]; then
         ansible-playbook -i localhost, -c local "${SCRIPT_DIR}/deploy-status.yml" &> /dev/null
@@ -62,10 +71,14 @@ function runDeployment() {
     export DEPLOYMENT_RC="$?"
 }
 
+echo ""
+echo ""
+echo "# Environment variables"
+displayEnvVars
+
 ## run status report (startup)
 ansibleDeployStatus
 
-echo ""
 echo ""
 echo ""
 echo "# Executing Ansistrano"
@@ -83,8 +96,8 @@ calcDuration
 ansibleDeployStatus
 
 echo ""
-echo " => Duration: ${DEPLOYMENT_DURATION}"
 echo ""
+echo "» Duration: ${DEPLOYMENT_DURATION}"
 echo ""
 
 exit "$DEPLOYMENT_RC"
