@@ -6,6 +6,7 @@ This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webd
 ### Changed
 - Moved /app/db to /storage/db (make backup before update!)
 - Added storage for npm and composer
+- Implemented reading of samson project/group environment variables when using ansistrano
 
 ## [1.2.0] - 2016-02-24
 ### Changed
