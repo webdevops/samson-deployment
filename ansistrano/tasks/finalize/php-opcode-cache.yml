@@ -21,4 +21,3 @@
     state: absent
   with_items:
     - "{{ ansistrano_release_path.stdout }}/{{ deployment_web_path_prefix }}/{{ deployment_php_opcode_clear_remove_file }}"
-    - "/tmp/.{{ deployment_php_opcode_clear_remove_file }}"
