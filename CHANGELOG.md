@@ -2,11 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webdevops/samson-deployment).
 
+## [1.3.0] - upcomming
+### Changed
+- Moved /app/db to /storage/db (make backup before update!)
+- Added storage for npm and composer
+
 ## [1.2.0] - 2016-02-24
 ### Changed
 - TYPO3 deployment support 
 - rsync excludes because of deployment issues
-- Moved /app/db to /storage/db (make backup before update!)
 
 ### Removed
 - MySQL support, switched to sqlite because of stability issues
