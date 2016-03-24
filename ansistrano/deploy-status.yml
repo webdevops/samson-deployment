@@ -1,6 +1,7 @@
 ---
 - name: Deployment reporting tasks
   hosts: all
+  gather_facts: false
   vars:
     DEPLOYMENT_RC:       "{{ lookup('env','DEPLOYMENT_RC') }}"
     DEPLOYMENT_DURATION: "{{ lookup('env','DEPLOYMENT_DURATION') }}"
