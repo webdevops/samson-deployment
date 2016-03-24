@@ -9,7 +9,9 @@ export ANSIBLE_CONFIG="${SCRIPT_DIR}/ansible.cfg"
 
 ## Read vars from .env
 if [[ -f "$(pwd)/.env" ]]; then
+    set -o allexport
     . "$(pwd)/.env"
+    set +o allexport
 fi
 
 if [ -z "$DEPLOYMENT_INVENTORY" ]; then
