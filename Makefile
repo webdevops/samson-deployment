@@ -33,6 +33,7 @@ backup:
 
 restore:
 	docker exec -it -u root $$(docker-compose ps -q app) service samson stop
+	docker exec -it -u root $$(docker-compose ps -q app) rm -rf /storage/db/
 	docker cp ./backup/db/ $$(docker-compose ps -q app):/storage/db/
 	docker exec -it -u root $$(docker-compose ps -q app) chown -R application:application /storage/db/
 	docker exec -it -u root $$(docker-compose ps -q app) service samson start
