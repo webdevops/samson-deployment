@@ -5,4 +5,5 @@
   args:
     chdir: "{{ deployment_base }}"
   with_items: "{{ deployment_build_tasks }}"
+  run_once: True
   when: deployment_build_tasks is defined
