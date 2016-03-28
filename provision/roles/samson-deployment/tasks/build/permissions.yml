@@ -1,0 +1,11 @@
+---
+
+- file:
+    path:  "{{ item.path }}"
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: "{{ item.state }}"
+    mode:  "{{ item.mode }}"
+  with_items:
+    - { path: "/app",     state: "directory", mode: "0755" }
+    - { path: "/app/tmp", state: "directory", mode: "0755" }

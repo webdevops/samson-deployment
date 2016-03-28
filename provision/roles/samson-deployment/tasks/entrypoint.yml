@@ -1,4 +1,0 @@
----
-
-- include: entrypoint/ssh.yml
-- include: entrypoint/permissions.yml

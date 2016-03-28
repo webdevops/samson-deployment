@@ -9,10 +9,13 @@
     state: directory
     mode:  0700
 
-- name: Fix ssh directory rights
+- name: Fix ssh owner
+  command: find /home/application/.ssh -exec chown "{{ APPLICATION_USER }}:{{ APPLICATION_GROUP }}" {} \;
+
+- name: Fix ssh directory permissions
   command: find /home/application/.ssh -type d -exec chmod 0700 {} \;
 
-- name: Fix ssh file rights
+- name: Fix ssh file permissions
   command: find /home/application/.ssh -type f -exec chmod 0600 {} \;
 
 - file:
@@ -24,10 +27,10 @@
 
 - name: Save ssh fingerprints from known hosts (online)
   shell: ssh-keyscan -p "{{ item.port | default(22) }}" {{ item.opts | default() }} -H "{{ item.hostname }}" >> /home/application/.ssh/known_hosts
-  with_items: SSH.known_hosts
+  with_items: "{{ SSH.known_hosts }}"
   when: SSH.known_hosts is defined and (item.file is not defined or item.file == "")
 
 - name: Save ssh fingerprints from known hosts (prefeched)
   shell: cat "/root/.known_ssh_prefetched/{{ item.file }}" >> /home/application/.ssh/known_hosts
-  with_items: SSH.known_hosts
+  with_items: "{{ SSH.known_hosts }}"
   when: SSH.known_hosts is defined and (item.file is defined and item.file != "")

@@ -10,7 +10,8 @@ Installed packages:
 * git
 * rsync
 * docker & docker-compose (as client)
-* gulp, grunt, bower
+* npm, gulp, grunt, bower
+* java (jre 7)
 * PHP cli & [composer](https://getcomposer.org/)
 
 ### What?
@@ -37,7 +38,7 @@ A web interface for deployments.
 * Edit `conf/samson.conf`:
     * Set GitHub appliation credentials (`GITHUB_CLIENT_ID`, `GITHUB_SECRET`)
     * Set GitHub access token (`GITHUB_TOKEN`)
-    * Set `SECRET_TOKEN` (random string with length of 128, can be generated with `bundle exec rake secret` inside docker container)
+    * Set `SECRET_TOKEN` (random string with length of 128, can be generated with `openssl rand -hex 128| head -c 128`)
     * Set `DEFAULT_URL` (must be accessable url for SSO callbacks)
 * Edit `etc/provision.yml` to setup public key fetching of `.ssh/known_hosts`
     * Fixed known_host keys can be stored inside `etc/known_hosts` folder and can be generated with `ssh-keyscan -H HOSTNAME > etc/known_hosts/HOSTNAME` (very secure)
@@ -68,6 +69,7 @@ DEPLOYMENT_APPLICATION         | Include variables for specific application (eg.
 DEPLOYMENT_PROJECT             | Include variables for specific project (eg. for shared paths, eg `foobar` for including `deployment/projects/foobar.yml`)
 DEPLOYMENT_OPTS                | Ansible options (can also be append to `/opt/ansistrano/deploy`)
 DEPLOYMENT_PLAYBOOK            | Ansible playbook (default is `deploy`)
+DEPLOYMENT_URL                 | URL to website (required for eg. PHP opcode cache clearing)
 
 ### Customization
 
@@ -95,6 +97,12 @@ Command                     | Description
 `make log`                  | Show logs
 `make update`               | Update Samson docker image (`docker pull`) and restart Samson
 `make ssh-key`              | Generate new ssh-key (will not overwrite if exists)
+<br>                        |
+`make backup`               | Run backup (app:/app/db/ will be copied to ./backup/db/)
+`make restore`              | Run restore (./backup/db/ will be copied to app:/app/db/)
+<br>                        |
+`make shell`                | Jump into shell inside the container (as `application` user)
+`make root`                 | Jump into shell inside the container (as `root` user)
 
 ## Project specific deployment
 
@@ -116,7 +124,7 @@ Host ssh-gateway
 Host server-behind-gateway
     Hostname server-behind-ssh-gateway.example.com
     User     root
-    ProxyCommand ssh ssh--server -W %h:%p
+    ProxyCommand ssh ssh-gateway -W %h:%p
 ```
 
 Now you can use `server-behind-gateway` as target host for SSH'ing at it will automatically jump over `ssh-gateway` to

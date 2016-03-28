@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webdevops/samson-deployment).
 
+## [1.3.0] - 2016-03-28
+### Changed
+- Moved /app/db to /storage/db (make backup before update!)
+- Added storage for npm and composer
+- Implemented reading of samson project/group environment variables when using ansistrano
+- Local tasks only run once for all affected hosts
+
 ## [1.2.0] - 2016-02-24
 ### Changed
 - TYPO3 deployment support 

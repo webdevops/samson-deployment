@@ -18,8 +18,8 @@ COPY ssh/             /home/application/.ssh/
 
 COPY provision/       /opt/docker/provision/
 
-RUN bash /opt/docker/bin/control.sh provision.role samson-deployment \
+RUN bash /opt/docker/bin/control.sh provision.role.build samson-deployment \
     && /opt/docker/bin/control.sh service.enable cron \
     && bash /opt/docker/bin/bootstrap.sh
 
-VOLUME ["/app/cached_repos", "/app/db", "/tmp"]
+VOLUME ["/tmp", "/storage"]

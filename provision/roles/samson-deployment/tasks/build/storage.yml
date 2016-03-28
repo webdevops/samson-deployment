@@ -1,0 +1,34 @@
+---
+
+- name: Create storage directories
+  file:
+    path:  "{{ item }}"
+    owner: "{{ APPLICATION_USER }}"
+    group: "{{ APPLICATION_GROUP }}"
+    state: directory
+    mode:  0755
+  with_items:
+    - /storage
+    - /storage/db
+    - /storage/cached_repos
+    - /storage/build_cache
+    - /storage/build_cache/npm
+    - /storage/build_cache/composer
+
+- file:
+    path:  "{{ item }}"
+    state: absent
+  with_items:
+    - /app/cached_repos
+
+- name: Link caching directories to /storage
+  file:
+    src:   "{{ item.src }}"
+    dest:  "{{ item.dest }}"
+    state: link
+    force: yes
+  with_items:
+    - { src: "/storage/build_cache/composer", dest: "/home/application/.composer" }
+    - { src: "/storage/build_cache/npm",      dest: "/home/application/.npm" }
+    - { src: "/storage/cached_repos",         dest: "/app/cached_repos" }
+

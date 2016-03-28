@@ -1,5 +1,6 @@
 ARGS = $(filter-out $@,$(MAKECMDGOALS))
 MAKEFLAGS += --silent
+.PHONY: backup restore
 
 list:
 	sh -c "echo; $(MAKE) -p no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | grep -v 'Makefile'| sort"
@@ -23,6 +24,25 @@ update:
 	docker pull webdevops/samson-deployment
 	docker-compose build
 	docker-compose up -d --force-recreate
+
+backup:
+	rm -rf ./backup/db/
+	docker exec -it -u root $$(docker-compose ps -q app) service samson stop
+	docker cp $$(docker-compose ps -q app):/storage/db/ ./backup/db/
+	docker exec -it -u root $$(docker-compose ps -q app) service samson start
+
+restore:
+	docker exec -it -u root $$(docker-compose ps -q app) service samson stop
+	docker exec -it -u root $$(docker-compose ps -q app) rm -rf /storage/db/
+	docker cp ./backup/db/ $$(docker-compose ps -q app):/storage/db/
+	docker exec -it -u root $$(docker-compose ps -q app) chown -R application:application /storage/db/
+	docker exec -it -u root $$(docker-compose ps -q app) service samson start
+
+shell:
+	docker exec -it -u application $$(docker-compose ps -q app) /bin/bash
+
+root:
+	docker exec -it -u root $$(docker-compose ps -q app) /bin/bash
 
 ssh-key:
 	if [ ! -f "./ssh/id_rsa" ]; then \

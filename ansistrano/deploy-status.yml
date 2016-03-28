@@ -1,0 +1,11 @@
+---
+- name: Deployment reporting tasks
+  hosts: all
+  gather_facts: false
+  vars:
+    DEPLOYMENT_RC:       "{{ lookup('env','DEPLOYMENT_RC') }}"
+    DEPLOYMENT_DURATION: "{{ lookup('env','DEPLOYMENT_DURATION') }}"
+  roles:
+    - { role: deployment-status-startup, when: DEPLOYMENT_RC == "" }
+    - { role: deployment-status-failure, when: DEPLOYMENT_RC != "0" and DEPLOYMENT_RC != "" }
+    - { role: deployment-status-success, when: DEPLOYMENT_RC == "0" }
