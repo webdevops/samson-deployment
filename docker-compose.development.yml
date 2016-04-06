@@ -1,0 +1,10 @@
+version: '2'
+services:
+  app:
+    build: .
+    ports:
+      - 9080:80
+  volumes:
+    - ./ansistrano/:/opt/ansistrano/
+    env_file:
+      - etc/environment.yml
