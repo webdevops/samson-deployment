@@ -16,6 +16,13 @@ ansistrano_version_dir: "releases"
 # Softlink name for the current release (default "current")
 ansistrano_current_dir: "{{ lookup('env','DEPLOYMENT_CURRENT_DIR') }}"
 
+# Deploy strategy for "current" directory (options: rsync, symlink)
+#   For symlink for PHP see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+#   but applied to other languages as well
+#   -> for apache use mod_realdoc
+#   -> for nginx use realpath setting
+ansistrano_current_via: "rsync"
+
 # Shared paths to symlink to release dir
 ansistrano_shared_paths: []
 

@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webdevops/samson-deployment).
 
+## [1.4.0] - 2016-04-06
+### Changed
+- Fixed ssh control path length for very long host names (see https://github.com/ansible/ansible/issues/11536)
+- Set default ansistrano deployment strategy to "rsync" instead of "symlink" to fix issues (see https://github.com/zendtech/ZendOptimizerPlus/issues/126)
+
 ## [1.3.0] - 2016-03-28
 ### Changed
 - Moved /app/db to /storage/db (make backup before update!)
