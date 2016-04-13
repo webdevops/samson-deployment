@@ -6,9 +6,8 @@
   run_once: True
   when: deployment_makefile_task is defined and deployment_makefile_task != ''
 
-- name: Run 'make {{ deployment_makefile_task }}'
-  local_action: command make {{ deployment_makefile_task }}
-  args:
-    chdir: "{{ deployment_base }}"
-  run_once: True
+- name: Run makefile
+  include: tasks/include.d/command-local.yml
+  vars:
+    command: "make {{ deployment_makefile_task }}"
   when: Makefile.stat.exists is defined and Makefile.stat.exists == True

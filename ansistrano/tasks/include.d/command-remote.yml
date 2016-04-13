@@ -1,0 +1,19 @@
+---
+
+- name: Command "{{ command }}"
+  shell: "{{ command }}"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+  register: command_run
+  ignore_errors: yes
+
+- name: Stdout of "{{ command }}"
+  debug: var=command_run.stdout_lines
+  when: command_run.rc != 0
+
+- name: Stderr of "{{ command }}"
+  debug: var=command_run.stderr
+  when: command_run.rc != 0
+
+- fail: msg="Execution of '{{ command }}' failed"
+  when: command_run.rc != 0

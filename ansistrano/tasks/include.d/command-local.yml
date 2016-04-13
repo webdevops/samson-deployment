@@ -1,0 +1,22 @@
+---
+
+- name: Command "{{ command }}"
+  shell: "{{ command }}"
+  args:
+    chdir: "{{ deployment_base }}"
+  run_once: True
+  delegate_to: 127.0.0.1
+  when: Makefile.stat.exists is defined and Makefile.stat.exists == True
+  register: command_run
+  ignore_errors: yes
+
+- name: Stdout of "{{ command }}"
+  debug: var=command_run.stdout_lines
+  when: command_run.rc != 0
+
+- name: Stderr of "{{ command }}"
+  debug: var=command_run.stderr
+  when: command_run.rc != 0
+
+- fail: msg="Execution of '{{ command }}' failed"
+  when: command_run.rc != 0

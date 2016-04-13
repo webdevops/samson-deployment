@@ -1,8 +1,8 @@
 ---
 
 - name: Run finalization tasks
-  command: "{{ item }}"
-  args:
-    chdir: "{{ ansistrano_release_path.stdout }}"
+  include: tasks/include.d/command-remote.yml
+  vars:
+    command: "{{ item }}"
   with_items: "{{ deployment_finalize_tasks }}"
   when: deployment_finalize_tasks is defined

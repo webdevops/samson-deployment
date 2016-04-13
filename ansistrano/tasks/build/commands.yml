@@ -1,9 +1,7 @@
 ---
 
 - name: Run build commands
-  local_action: command {{ item }}
-  args:
-    chdir: "{{ deployment_base }}"
+  include: tasks/include.d/command-local.yml
+  vars:
+    command: "{{ item }}"
   with_items: "{{ deployment_build_tasks }}"
-  run_once: True
-  when: deployment_build_tasks is defined
