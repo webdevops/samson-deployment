@@ -58,6 +58,16 @@ export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
 /opt/ansistrano/deploy
 ```
 
+or eg. for TYPO3 as application:
+
+```
+export DEPLOYMENT_INVENTORY=vagrant
+export DEPLOYMENT_APPLICATION="typo3"
+export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
+/opt/ansistrano/deploy
+```
+
+
 ### Deploy variables
 
 Variable                       | Description
