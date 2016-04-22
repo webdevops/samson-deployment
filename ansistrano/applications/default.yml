@@ -82,3 +82,13 @@ deployment_curl_opts: ""
 
 # Enable for final website validation check via curl request (requires deployment_web_url)
 deployment_validate_website: False
+
+#############################
+# Notfication
+#############################
+
+# Slack token for incoming web hook (eg. T...../B...../......., disabled if empty)
+notification_slack_token: ""
+
+# Slack notification channel
+notification_slack_channel: ""

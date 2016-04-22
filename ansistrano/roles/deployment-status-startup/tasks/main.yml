@@ -1,2 +1,10 @@
 ---
 
+- local_action:
+    module: slack
+    token: "{{ notification_slack_token }}"
+    username: "Samson deployment"
+    msg:   ":airplane_departure: Started deployment of {{ lookup('env','PROJECT_NAME') }}/{{ lookup('env','STAGE') }} (revision: {{ lookup('env','REVISION') }}) by {{ lookup('env','DEPLOYER_NAME') }}: {{ lookup('env','DEPLOY_URL') }}"
+    color: "normal"
+    channel: "{{ notification_slack_channel | default(omit) }}"
+  when: notification_slack_token is defined and notification_slack_token != ""
