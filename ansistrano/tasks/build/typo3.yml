@@ -1,7 +1,7 @@
 ---
 
-- name: Check if html/typo3cms exists
-  local_action: stat path="{{ deployment_base }}/html/typo3cms"
+- name: Check if {{deployment_web_path_prefix}}/typo3cms exists
+  local_action: stat path="{{ deployment_base }}{{ deployment_web_path_prefix }}/typo3cms"
   register: typo3cms_inside_html
   run_once: True
 
@@ -10,8 +10,8 @@
   register: typo3cms_inside_root
   run_once: True
 
-- name: Create /typo3cms (if html/typo3cms exists and /typo3cms not)
-  local_action: file src=html/typo3cms dest=typo3cms state=link
+- name: Create /typo3cms (if {{ deployment_web_path_prefix }}/typo3cms exists and /typo3cms not)
+  local_action: file src={{ deployment_web_path_prefix }}/typo3cms dest=typo3cms state=link
   run_once: True
   when: (typo3cms_inside_html.stat.exists is defined and typo3cms_inside_root.stat.exists is defined) and
         (typo3cms_inside_html.stat.exists == True and typo3cms_inside_root.stat.exists == False)
