@@ -3,6 +3,7 @@
 - name: Run finalization tasks
   include: tasks/include.d/command-remote.yml
   vars:
-    command: "{{ item }}"
+    command:  "{{ item }}"
+    chdir:    "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
   with_items: "{{ deployment_finalize_tasks }}"
   when: deployment_finalize_tasks is defined

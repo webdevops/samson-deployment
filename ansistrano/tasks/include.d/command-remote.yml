@@ -3,7 +3,7 @@
 - name: Command "{{ command }}"
   shell: "{{ command }}"
   args:
-    chdir: "{{ ansistrano_release_path.stdout }}"
+    chdir: "{{ chdir }}"
   register: command_run
   ignore_errors: yes
 

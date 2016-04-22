@@ -3,5 +3,6 @@
 - name: Run build commands
   include: tasks/include.d/command-local.yml
   vars:
-    command: "{{ item }}"
+    command:  "{{ item }}"
+    chdir:    "{{ deployment_base }}"
   with_items: "{{ deployment_build_tasks }}"

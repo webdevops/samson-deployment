@@ -3,6 +3,7 @@
 - name: Run migration tasks
   include: tasks/include.d/command-remote.yml
   vars:
-    command: "{{ item }}"
+    command:  "{{ item }}"
+    chdir:    "{{ ansistrano_release_path.stdout }}"
   with_items: "{{ deployment_migration_tasks }}"
   when: deployment_migration_tasks is defined
