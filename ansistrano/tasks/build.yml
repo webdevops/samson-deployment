@@ -1,4 +1,8 @@
 ---
 
 - include: build/makefile.yml
+
 - include: build/commands.yml
+
+- include: build/typo3.yml
+  when: deployment_application == "typo3"
