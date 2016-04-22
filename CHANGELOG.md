@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [WebDevOps.io Samson Deployment](https://github.com/webdevops/samson-deployment).
 
+## [1.5.0] - upcoming
+### Added
+- Notification for Slack service
+- TYPO3: Added automatic migration for "typo3cms" path for TYPO3 6.2
+### Changed
+- Added readable command output inside Ansible
+- Running finalize commands inside current/ instead of releases/xxxx/ path
+- Reduced opcode cache clearing to 3 times instead of 10
+- Disabled retry file for ansistrano
+
 ## [1.4.0] - 2016-04-06
 ### Changed
 - Fixed ssh control path length for very long host names (see https://github.com/ansible/ansible/issues/11536)
