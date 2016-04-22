@@ -3,6 +3,13 @@
 # Application name (for conditions)
 deployment_application: "typo3"
 
+# Deploy strategy for "current" directory (options: rsync, symlink)
+#   For symlink for PHP see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+#   but applied to other languages as well
+#   -> for apache use mod_realdoc
+#   -> for nginx use realpath setting
+ansistrano_current_via: "rsync"
+
 # Shared paths to symlink to release dir
 ansistrano_shared_paths:
   - web/fileadmin
@@ -14,8 +21,22 @@ deployment_permissions:
   - { path: "web/typo3conf/PackageStates.php", mode: "0664" }
   - { path: "web/typo3conf/LocalConfiguration.php", mode: "0660" }
 
+# Tasks which are run for migration (release is not deployed to live yet)
+deployment_migration_tasks:
+  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms database:updateschema field.add
+  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms language:update
+  - rm -rf html/typo3temp/Cache/
+
+# Tasks which are run after final deployment (release live)
+deployment_finalize_tasks:
+  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms cache:flush
+  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms cache:warmup
+
 # Path Prefix for document root
 deployment_web_path_prefix: "/web"
 
 # Enable PHP opcode cache clearing (requires deployment_web_url)
 deployment_php_opcode_cache_clear: True
+
+# Enable if you want to check if website is running after deployment (needs URL)
+deployment_validate_website: False

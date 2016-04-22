@@ -62,8 +62,9 @@ or eg. for TYPO3 as application:
 
 ```
 export DEPLOYMENT_INVENTORY=vagrant
-export DEPLOYMENT_APPLICATION="typo3"
 export DEPLOYMENT_DEPLOY_TO=/var/www/target-deployment-path
+export DEPLOYMENT_APPLICATION="typo3"
+export TYPO3_CONTEXT="Production"
 /opt/ansistrano/deploy
 ```
 
