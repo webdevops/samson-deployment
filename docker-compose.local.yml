@@ -4,7 +4,7 @@ services:
     build: .
     ports:
       - 9080:80
-  volumes:
-    - ./ansistrano/:/opt/ansistrano/
+    volumes:
+      - ./ansistrano/:/opt/ansistrano/
     env_file:
       - etc/environment.yml
