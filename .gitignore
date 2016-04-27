@@ -2,3 +2,5 @@
 /ssh/id_rsa
 /ssh/id_rsa.pub
 /backup/*
+/docker-compose.yml
+/ansistrano/var.*.json
