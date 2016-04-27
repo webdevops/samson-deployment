@@ -1,0 +1,106 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(dirname $(readlink -f "$0"))"
+
+DEBUG=0
+
+export PYTHONUNBUFFERED=1
+export ANSIBLE_CONFIG="${SCRIPT_DIR}/ansible.cfg"
+
+## Read vars from .env
+if [[ -f "$(pwd)/.env" ]]; then
+    set -o allexport
+    . "$(pwd)/.env"
+    set +o allexport
+fi
+
+if [ -z "$DEPLOYMENT_INVENTORY" ]; then
+    echo "[ERROR] DEPLOYMENT_INVENTORY not set"
+    exit 1
+fi
+
+if [ -z "$DEPLOYMENT_DEPLOY_TO" ]; then
+    echo "[ERROR] DEPLOYMENT_DEPLOY_TO not set"
+    exit 1
+fi
+
+if [ -z "$DEPLOYMENT_DEPLOY_FROM" ]; then
+    export DEPLOYMENT_DEPLOY_FROM="$(pwd)/"
+fi
+
+if [ -z "$DEPLOYMENT_CURRENT_DIR" ]; then
+    export DEPLOYMENT_CURRENT_DIR="current"
+fi
+
+if [ -z "$DEPLOYMENT_APPLICATION" ]; then
+    export DEPLOYMENT_APPLICATION="default"
+fi
+
+if [ -z "$DEPLOYMENT_PROJECT" ]; then
+    export DEPLOYMENT_PROJECT="default"
+fi
+
+
+if [ -z "$DEPLOYMENT_OPTS" ]; then
+    DEPLOYMENT_OPTS=""
+fi
+
+if [ -z "$DEPLOYMENT_PLAYBOOK" ]; then
+    DEPLOYMENT_PLAYBOOK="deploy"
+fi
+
+function displayEnvVars() {
+    env | grep DEPLOYMENT_ | sed -e 's/^/» /'
+}
+
+function ansibleDeployStatus() {
+    if [[ "$DEBUG" -eq 0 ]]; then
+        ansible-playbook -i localhost, -c local "${SCRIPT_DIR}/deploy-status.yml" &> /dev/null
+    else
+        ansible-playbook -i localhost, -c local "${SCRIPT_DIR}/deploy-status.yml"
+    fi
+}
+
+function calcDuration() {
+    export DEPLOYMENT_DURATION_TIME="$SECONDS"
+    export DEPLOYMENT_DURATION_MINUTES="$(($DEPLOYMENT_DURATION_TIME / 60))"
+    export DEPLOYMENT_DURATION_SECONDS="$(($DEPLOYMENT_DURATION_TIME % 60))"
+    export DEPLOYMENT_DURATION="${DEPLOYMENT_DURATION_MINUTES}:$(printf "%02d" $DEPLOYMENT_DURATION_SECONDS) min"
+}
+
+function runDeployment() {
+    ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS "$@"
+    export DEPLOYMENT_RC="$?"
+}
+
+echo ""
+echo ""
+echo "# Environment variables"
+displayEnvVars
+
+## run status report (startup)
+ansibleDeployStatus
+
+echo ""
+echo ""
+echo "# Executing Ansistrano"
+
+## reset timer
+SECONDS=0
+
+## run deployment
+runDeployment "$@"
+
+## calculate duration
+calcDuration
+
+## run status report (finish)
+ansibleDeployStatus
+
+echo ""
+echo ""
+echo "» Duration: ${DEPLOYMENT_DURATION}"
+echo ""
+
+exit "$DEPLOYMENT_RC"
+

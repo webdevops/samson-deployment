@@ -1,106 +1,309 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-SCRIPT_DIR="$(dirname $(readlink -f "$0"))"
+import os
+import argparse
+import json
+import sys
+import subprocess
+import tempfile
+import datetime
+import re
+import signal
+from dotenv import load_dotenv
 
-DEBUG=0
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
-export PYTHONUNBUFFERED=1
-export ANSIBLE_CONFIG="${SCRIPT_DIR}/ansible.cfg"
+DEPLOYMENT_VARS_FILTER = [
+    '^DEPLOY',
+    '^PROJECT',
+    '^REVISION',
+    '^TAG',
+    '^CACHE_DIR',
+    '^STAGE',
+    '^TYPO3',
+    '^SYMFONY',
+    '^PHP',
+]
 
-## Read vars from .env
-if [[ -f "$(pwd)/.env" ]]; then
-    set -o allexport
-    . "$(pwd)/.env"
-    set +o allexport
-fi
+PLAYBOOK_STATUS='deploy-status'
+PLAYBOOK_DEPLOY='deploy'
 
-if [ -z "$DEPLOYMENT_INVENTORY" ]; then
-    echo "[ERROR] DEPLOYMENT_INVENTORY not set"
-    exit 1
-fi
+SCRIPT_DIR=os.path.dirname(os.path.realpath(__file__))
+CURRENT_DIR=os.path.realpath(os.getcwd())
 
-if [ -z "$DEPLOYMENT_DEPLOY_TO" ]; then
-    echo "[ERROR] DEPLOYMENT_DEPLOY_TO not set"
-    exit 1
-fi
-
-if [ -z "$DEPLOYMENT_DEPLOY_FROM" ]; then
-    export DEPLOYMENT_DEPLOY_FROM="$(pwd)/"
-fi
-
-if [ -z "$DEPLOYMENT_CURRENT_DIR" ]; then
-    export DEPLOYMENT_CURRENT_DIR="current"
-fi
-
-if [ -z "$DEPLOYMENT_APPLICATION" ]; then
-    export DEPLOYMENT_APPLICATION="default"
-fi
-
-if [ -z "$DEPLOYMENT_PROJECT" ]; then
-    export DEPLOYMENT_PROJECT="default"
-fi
-
-
-if [ -z "$DEPLOYMENT_OPTS" ]; then
-    DEPLOYMENT_OPTS=""
-fi
-
-if [ -z "$DEPLOYMENT_PLAYBOOK" ]; then
-    DEPLOYMENT_PLAYBOOK="deploy"
-fi
-
-function displayEnvVars() {
-    env | grep DEPLOYMENT_ | sed -e 's/^/» /'
+DEPLOYMENT_VARS={
+    'DEPLOYMENT_RC': ''
 }
 
-function ansibleDeployStatus() {
-    if [[ "$DEBUG" -eq 0 ]]; then
-        ansible-playbook -i localhost, -c local "${SCRIPT_DIR}/deploy-status.yml" &> /dev/null
-    else
-        ansible-playbook -i localhost, -c local "${SCRIPT_DIR}/deploy-status.yml"
-    fi
-}
+def messageHeader(header):
+    print bcolors.HEADER + header + bcolors.ENDC;
+    print '=' * len(header)
+    print
 
-function calcDuration() {
-    export DEPLOYMENT_DURATION_TIME="$SECONDS"
-    export DEPLOYMENT_DURATION_MINUTES="$(($DEPLOYMENT_DURATION_TIME / 60))"
-    export DEPLOYMENT_DURATION_SECONDS="$(($DEPLOYMENT_DURATION_TIME % 60))"
-    export DEPLOYMENT_DURATION="${DEPLOYMENT_DURATION_MINUTES}:$(printf "%02d" $DEPLOYMENT_DURATION_SECONDS) min"
-}
 
-function runDeployment() {
-    ansible-playbook -i "${SCRIPT_DIR}/inventory/${DEPLOYMENT_INVENTORY}" "${SCRIPT_DIR}/${DEPLOYMENT_PLAYBOOK}.yml" $DEPLOYMENT_OPTS "$@"
-    export DEPLOYMENT_RC="$?"
-}
+def message(msg=''):
+    if msg:
+        print '>> ' + msg
+    else:
+        print ''
 
-echo ""
-echo ""
-echo "# Environment variables"
-displayEnvVars
+def messageError(msg):
+    print '[ERROR] ' + msg
 
-## run status report (startup)
-ansibleDeployStatus
+def runAnsiblePlaybook(args, local=False, playbook=False, foreground=True):
+    envVars = dict(os.environ)
 
-echo ""
-echo ""
-echo "# Executing Ansistrano"
+    ## Add ANSIBLE_CONFIG if file exists
+    ansibleCfg = os.path.join(SCRIPT_DIR, 'ansible.cfg')
+    if os.path.isfile(ansibleCfg):
+        envVars['ANSIBLE_CONFIG'] = ansibleCfg
 
-## reset timer
-SECONDS=0
+    cmd = [
+        'ansible-playbook',
+    ]
 
-## run deployment
-runDeployment "$@"
+    if playbook:
+        cmd.extend([
+            os.path.join(SCRIPT_DIR, playbook + '.yml')
+        ])
+    else:
+        cmd.extend([
+            os.path.join(SCRIPT_DIR, PLAYBOOK_DEPLOY + '.yml')
+        ])
 
-## calculate duration
-calcDuration
+    ## set inventory
+    if local:
+        cmd.extend([
+            '-i', 'localhost,',
+            '--connection=local',
+        ])
+    else:
+        cmd.extend([
+            '-i', os.path.join(SCRIPT_DIR, 'inventory/' + args.inventory)
+        ])
 
-## run status report (finish)
-ansibleDeployStatus
+    if args.limit:
+        cmd.extend([
+            '-l', args.limit
+        ])
 
-echo ""
-echo ""
-echo "» Duration: ${DEPLOYMENT_DURATION}"
-echo ""
+    ## Deployment variables
+    f = tempfile.NamedTemporaryFile(dir=SCRIPT_DIR, prefix='vars.', suffix='.json', delete=False)
+    json.dump(DEPLOYMENT_VARS, f)
+    f.close()
+    deploymentVarFile = f.name
 
-exit "$DEPLOYMENT_RC"
+    cmd.extend([
+        '--extra-vars', '@' + deploymentVarFile
+    ])
 
+    if args.verbose:
+        cmd.extend([
+            '-' + ('v' * len(args.verbose))
+        ])
+
+    ## run ansible
+    child = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        env=envVars,
+        preexec_fn=os.setsid
+    )
+    for line in iter(child.stdout.readline, ''):
+        if foreground:
+            line = line.replace('\r', '').replace('\n', '')
+            print line
+            sys.stdout.flush()
+    streamdata = child.communicate()[0]
+    retval = child.returncode
+
+    ret = True
+    if retval != 0:
+        ret = False
+        messageError('Ansible execution failed')
+
+    DEPLOYMENT_VARS['DEPLOYMENT_RC'] = retval
+
+    os.unlink(deploymentVarFile)
+
+    return ret
+
+
+def showSummary(args):
+    maxLength = len(max(DEPLOYMENT_VARS.keys(), key=len))
+    for key in DEPLOYMENT_VARS.keys():
+        print ' ' + bcolors.BOLD + key.rjust(maxLength, ' ') + ': ' + bcolors.ENDC + bcolors.OKGREEN + DEPLOYMENT_VARS[key] + bcolors.ENDC
+    print ''
+
+
+def playbookDeployStatus(args):
+    message('Running stats playbook')
+
+    if args.verbose:
+        runAnsiblePlaybook(args, local=True, playbook=PLAYBOOK_STATUS, foreground=True)
+    else:
+        runAnsiblePlaybook(args, local=True, playbook=PLAYBOOK_STATUS, foreground=False)
+
+def playbookDeployment(args):
+    message('Running deployment playbook')
+    return runAnsiblePlaybook(args)
+
+def loadDotEnvVars(args):
+    dotEnvFile = os.path.join(CURRENT_DIR, '.env')
+    if os.path.isfile(dotEnvFile):
+        load_dotenv(dotEnvFile)
+
+def buildDeploymentVars(args):
+    varKeyList = os.environ.keys();
+
+    for varRegExp in DEPLOYMENT_VARS_FILTER:
+        for varName in varKeyList:
+            if re.match(varRegExp, varName):
+                DEPLOYMENT_VARS[varName] = os.getenv(varName)
+
+    if args.inventory:
+        DEPLOYMENT_VARS['DEPLOYMENT_INVENTORY'] = args.inventory
+
+    if args.deployFrom:
+        DEPLOYMENT_VARS['DEPLOYMENT_DEPLOY_FROM'] = args.deployFrom
+
+    if args.deployTo:
+        DEPLOYMENT_VARS['DEPLOYMENT_DEPLOY_TO'] = args.deployTo
+
+    if args.deployCurrentDir:
+        DEPLOYMENT_VARS['DEPLOYMENT_CURRENT_DIR'] = args.deployCurrentDir
+
+    if args.deployApplication:
+        DEPLOYMENT_VARS['DEPLOYMENT_APPLICATION'] = args.deployApplication
+
+    if args.deployProject:
+        DEPLOYMENT_VARS['DEPLOYMENT_PROJECT'] = args.deployProject
+
+
+def calculateDuration(startTime):
+    endTime = datetime.datetime.now()
+    duration = endTime - startTime
+    total = duration.total_seconds()
+    d = divmod(total,86400)  # days
+    h = divmod(d[1],3600)  # hours
+    m = divmod(h[1],60)  # minutes
+    s = m[1]  # seconds
+
+    DEPLOYMENT_VARS['DEPLOYMENT_DURATION_TIME'] = total
+    DEPLOYMENT_VARS['DEPLOYMENT_DURATION_MINUTES'] = m
+    DEPLOYMENT_VARS['DEPLOYMENT_DURATION_SECONDS'] = s
+    DEPLOYMENT_VARS['DEPLOYMENT_DURATION'] = '%d:%02d min' % (m[0],s)
+
+def main(args):
+    message()
+    message('Starting Ansistrano deployment')
+    message()
+
+    loadDotEnvVars(args)
+    buildDeploymentVars(args)
+
+    messageHeader('Collecting variables')
+    showSummary(args)
+
+    messageHeader('Starting deployment')
+    playbookDeployStatus(args)
+
+    startTime = datetime.datetime.now()
+    status = playbookDeployment(args)
+    calculateDuration(startTime)
+
+    playbookDeployStatus(args)
+
+    message()
+    message('Duration: ' + DEPLOYMENT_VARS['DEPLOYMENT_DURATION'])
+    message()
+
+    if not status:
+        sys.exit(1)
+    else:
+        sys.exit(0)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    playbook = PLAYBOOK_DEPLOY
+    if os.getenv('DEPLOYMENT_PLAYBOOK'):
+        playbook = os.getenv('DEPLOYMENT_PLAYBOOK')
+
+    parser.add_argument(
+        '-i', '--inventory-file',
+        dest='inventory',
+        default=os.getenv('DEPLOYMENT_INVENTORY'),
+        help='Ansible inventory'
+    )
+
+    parser.add_argument(
+        '--deploy-to',
+        dest='deployTo',
+        default=os.getenv('DEPLOYMENT_DEPLOY_TO'),
+        help='Deploy target'
+    )
+
+    parser.add_argument(
+        '--deploy-from',
+        dest='deployFrom',
+        default=CURRENT_DIR,
+        help='Deploy from'
+    )
+
+    parser.add_argument(
+        '--current-dir',
+        dest='deployCurrentDir',
+        default=os.getenv('DEPLOYMENT_CURRENT_DIR'),
+        help='Name of current directory'
+    )
+
+    parser.add_argument(
+        '--application',
+        dest='deployApplication',
+        default=os.getenv('DEPLOYMENT_APPLICATION'),
+        help='Application'
+    )
+
+    parser.add_argument(
+        '--project',
+        dest='deployProject',
+        default=os.getenv('DEPLOYMENT_PROJECT'),
+        help='Project'
+    )
+
+    parser.add_argument(
+        '--playbook',
+        dest='playbook',
+        default=playbook,
+        help='Ansible playbook'
+    )
+
+    parser.add_argument(
+        '--limit', '-l',
+        dest='limit',
+        help='Ansible inventory limit'
+    )
+
+    parser.add_argument(
+        '--verbose', '-v',
+        dest='verbose',
+        const=True,
+        action='append_const',
+        help='Ansible verbose mode'
+    )
+
+    parser.add_argument('args', nargs=argparse.REMAINDER)
+
+    ## Execute
+    args = parser.parse_args()
+    main(args)
