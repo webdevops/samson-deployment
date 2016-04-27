@@ -23,14 +23,14 @@ deployment_permissions:
 
 # Tasks which are run for migration (release is not deployed to live yet)
 deployment_migration_tasks:
-  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms database:updateschema field.add
-  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms language:update
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms database:updateschema field.add
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms language:update
   - rm -rf html/typo3temp/Cache/
 
 # Tasks which are run after final deployment (release live)
 deployment_finalize_tasks:
-  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms cache:flush
-  - TYPO3_CONTEXT="{{ lookup('env','TYPO3_CONTEXT') }}" php typo3cms cache:warmup
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:flush
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:warmup
 
 # Path Prefix for document root
 deployment_web_path_prefix: "/web"

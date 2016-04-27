@@ -4,7 +4,7 @@
     module: slack
     token: "{{ notification_slack_token }}"
     username: "Samson deployment"
-    msg:   ":boom: FAILED deployment of {{ lookup('env','PROJECT_NAME') }}/{{ lookup('env','STAGE') }} (revision: {{ lookup('env','REVISION') }}, duration: {{ lookup('env','DEPLOYMENT_DURATION') }}), see {{ lookup('env','DEPLOY_URL') }}"
+    msg:   ":boom: FAILED deployment of {{ PROJECT_NAME }}/{{ STAGE }} (revision: {{ REVISION }}, duration: {{ DEPLOYMENT_DURATION }}), see {{ DEPLOY_URL }}"
     color: "danger"
     channel: "{{ notification_slack_channel | default(omit) }}"
   when: notification_slack_token is defined and notification_slack_token != ""

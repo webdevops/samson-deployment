@@ -5,16 +5,16 @@
 #############################
 
 # Rsync files from this directory (with trailing /)
-ansistrano_deploy_from: "{{ lookup('env','DEPLOYMENT_DEPLOY_FROM') }}"
+ansistrano_deploy_from: "{{ DEPLOYMENT_DEPLOY_FROM }}"
 
 # Rsync files to this directory (with releases, shared and current folder)
-ansistrano_deploy_to: "{{ lookup('env','DEPLOYMENT_DEPLOY_TO') }}"
+ansistrano_deploy_to: "{{ DEPLOYMENT_DEPLOY_TO }}"
 
 # Folder name for the releases
 ansistrano_version_dir: "releases"
 
 # Softlink name for the current release (default "current")
-ansistrano_current_dir: "{{ lookup('env','DEPLOYMENT_CURRENT_DIR') }}"
+ansistrano_current_dir: "{{ DEPLOYMENT_CURRENT_DIR | default('current') }}"
 
 # Deploy strategy for "current" directory (options: rsync, symlink)
 #   For symlink for PHP see https://github.com/zendtech/ZendOptimizerPlus/issues/126
@@ -43,7 +43,7 @@ ansistrano_after_cleanup_tasks_file:  "{{ playbook_dir }}/tasks/teardown.yml"
 #############################
 
 # Set the deployment base directory (for running local tasks)
-deployment_base: "{{ lookup('env','DEPLOYMENT_DEPLOY_FROM') }}"
+deployment_base: "DEPLOYMENT_DEPLOY_FROM"
 
 # Run defined Makefile task (on deployment server, before rsync)
 deployment_makefile_task: "build"
@@ -69,7 +69,7 @@ deployment_permission_mode:  "u=rwX,g=rX,o=rX"
 deployment_permissions: []
 
 # URL to instance (eg. for PHP OpCode cache clearing)
-deployment_web_url: "{{ lookup('env','DEPLOYMENT_URL') }}"
+deployment_web_url: "{{ DEPLOYMENT_URL }}"
 
 # Path Prefix for document root
 deployment_web_path_prefix: ""
