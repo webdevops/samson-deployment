@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -51,7 +52,7 @@ def messageHeader(header):
 
 def message(msg=''):
     if msg:
-        print '>> ' + msg
+        print '» ' + msg
     else:
         print ''
 
