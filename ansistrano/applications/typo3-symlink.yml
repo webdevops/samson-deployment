@@ -8,7 +8,7 @@ deployment_application: "typo3"
 #   but applied to other languages as well
 #   -> for apache use mod_realdoc
 #   -> for nginx use realpath setting
-ansistrano_current_via: "rsync"
+ansistrano_current_via: "symlink"
 
 # Shared paths to symlink to release dir
 ansistrano_shared_paths:
@@ -23,14 +23,13 @@ deployment_permissions:
 
 # Tasks which are run for migration (release is not deployed to live yet)
 deployment_migration_tasks:
-  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms database:updateschema '*.add,*.change'
-  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms language:update
-  - rm -rf html/typo3temp/Cache/
-
-# Tasks which are run after final deployment (release live)
-deployment_finalize_tasks:
   - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:flush --force
   - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:warmup
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms database:updateschema '*.add,*.change'
+  - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms language:update
+
+# Tasks which are run after final deployment (release live)
+deployment_finalize_tasks: []
 
 # Path Prefix for document root
 deployment_web_path_prefix: "/web"
