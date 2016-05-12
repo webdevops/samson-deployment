@@ -216,13 +216,16 @@ def main(args):
     showSummary(args)
 
     messageHeader('Starting deployment')
-    playbookDeployStatus(args)
+
+    if not args.noStatusReport:
+        playbookDeployStatus(args)
 
     startTime = datetime.datetime.now()
     status = playbookDeployment(args)
     calculateDuration(startTime)
 
-    playbookDeployStatus(args)
+    if not args.noStatusReport:
+        playbookDeployStatus(args)
 
     message()
     message('Duration: ' + DEPLOYMENT_VARS['DEPLOYMENT_DURATION'])
@@ -301,6 +304,14 @@ if __name__ == '__main__':
         const=True,
         action='append_const',
         help='Ansible verbose mode'
+    )
+
+    parser.add_argument(
+        '--no-status',
+        dest='noStatusReport',
+        const=True,
+        action='store_const',
+        help='Do not run status reporting'
     )
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
