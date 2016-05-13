@@ -9,13 +9,6 @@ Requirements
 * GitHub application key (see https://github.com/settings/developers)
 * GitHub access token (https://github.com/settings/tokens)
 
-* Edit `etc/provision.yml` to setup public key fetching of `.ssh/known_hosts`
-    * Fixed known_host keys can be stored inside `etc/known_hosts` folder and can be generated with `ssh-keyscan -H HOSTNAME > etc/known_hosts/HOSTNAME` (very secure)
-    * All hosts without stored known_host keys will be automatically fetched when Dockerfile build is running (less secure)
-* Add ssh keys to `ssh` (will be deployed to `/home/application/.ssh`) or generate an new one with `make ssh-key`
-* Run `docker-compose up -d` or `make restart`
-
-
 Installation
 ------------
 
@@ -79,3 +72,8 @@ It's also possible to setup ssh proxy server to reach server behind another serv
         User     root
         ProxyCommand ssh ssh-gateway -W %h:%p
 
+
+Start Samson
+------------
+
+To run or upload new configuration execute ``docker-compose up -d`` or ``make restart``.
