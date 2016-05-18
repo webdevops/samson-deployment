@@ -60,5 +60,5 @@ SECRET_TOKEN:
 	echo "SECRET_TOKEN=$$(openssl rand -hex 128 | head -c 128)"
 	echo ""
 
-doc-watch:
+sphinx:
 	docker run -t -i --rm -p 8080:8000 -v "$$(pwd)/documentation/docs/:/opt/docs" webdevops/sphinx sphinx-autobuild --poll -H 0.0.0.0 /opt/docs html
