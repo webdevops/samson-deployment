@@ -34,7 +34,7 @@ Setup ``conf/samson.conf`` file with following informations:
 
     .. code-block:: bash
 
-        make gen-random
+        make SECRET_TOKEN
 
 For building the Docker images locally you can use ``make all`` to start the build process.
 There are multiple targets inside the Makefile for building only specific images eg. ``make webdevops/apache``
