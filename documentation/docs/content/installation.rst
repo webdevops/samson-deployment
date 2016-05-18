@@ -12,7 +12,9 @@ Requirements
 Installation
 ------------
 
-Checkout from git::
+Checkout from git:
+
+.. code-block:: bash
 
     # Checkout master (stable) branch
     git clone https://github.com/webdevops/samson-deployment.git samson-deployment
@@ -28,9 +30,11 @@ Setup ``conf/samson.conf`` file with following informations:
 * ``DEFAULT_URL`` with application URL (GitHub will redirect users after login to this URL)
 * ``GITHUB_CLIENT_ID`` and ``GITHUB_SECRET`` (GitHub application credentials)
 * ``GITHUB_TOKEN`` (GitHub access token)
-* ``SECRET_TOKEN`` with random string with 128 chars, can be generated with::
+* ``SECRET_TOKEN`` with random string with 128 chars, can be generated with:
 
-    openssl rand -hex 128| head -c 128
+    .. code-block:: bash
+
+        make gen-random
 
 For building the Docker images locally you can use ``make all`` to start the build process.
 There are multiple targets inside the Makefile for building only specific images eg. ``make webdevops/apache``
@@ -52,7 +56,7 @@ example there are some server keys from public servers (github, gitlab, bitbucke
 Setup SSH public and private key
 --------------------------------
 
-Add public and private key to ``ssh/``, this directory will be copied into ``~application/.ssh`` into the Docker container.
+Add public and private key to ``ssh/``, this directory will be copied into the Docker container to ``~application/.ssh``.
 
 
 SSH advanced configuration
