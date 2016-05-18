@@ -71,14 +71,13 @@ def runAnsiblePlaybook(args, local=False, playbook=False, foreground=True):
         'ansible-playbook',
     ]
 
-    if playbook:
-        cmd.extend([
-            os.path.join(SCRIPT_DIR, playbook + '.yml')
-        ])
-    else:
-        cmd.extend([
-            os.path.join(SCRIPT_DIR, PLAYBOOK_DEPLOY + '.yml')
-        ])
+    if not playbook:
+        playbook = PLAYBOOK_DEPLOY
+
+    cmd.extend([
+        os.path.join(SCRIPT_DIR, playbook + '.yml')
+    ])
+
 
     ## set inventory
     if local:
@@ -86,10 +85,17 @@ def runAnsiblePlaybook(args, local=False, playbook=False, foreground=True):
             '-i', 'localhost,',
             '--connection=local',
         ])
-    else:
+    elif args.hostname:
+        cmd.extend([
+            '-i', args.hostname + ',',
+        ])
+    elif args.inventory:
         cmd.extend([
             '-i', os.path.join(SCRIPT_DIR, 'inventory/' + args.inventory)
         ])
+    else:
+        messageError('No inventory or hostname specified')
+        sys.exit(1)
 
     if args.limit:
         cmd.extend([
@@ -130,7 +136,7 @@ def runAnsiblePlaybook(args, local=False, playbook=False, foreground=True):
     ret = True
     if retval != 0:
         ret = False
-        messageError('Ansible execution failed')
+        messageError('Ansible execution of playbook "' + playbook + '" failed')
 
     DEPLOYMENT_VARS['DEPLOYMENT_RC'] = retval
 
@@ -248,6 +254,13 @@ if __name__ == '__main__':
         dest='inventory',
         default=os.getenv('DEPLOYMENT_INVENTORY'),
         help='Ansible inventory'
+    )
+
+    parser.add_argument(
+        '--hostname',
+        dest='hostname',
+        default=os.getenv('DEPLOYMENT_HOSTNAME'),
+        help='Deployment remote hostname'
     )
 
     parser.add_argument(
