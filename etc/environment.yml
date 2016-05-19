@@ -10,6 +10,9 @@
 # Samson settings
 MYSQL_URL=mysql://root:sql@mysql:3306/samson
 
+# Cleanup old build logs (in days, 0 to disable)
+SQLITE_CLEANUP_DAYS=0
+
 #######################################
 # MySQL settings
 # -> if you change these settings
