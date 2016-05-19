@@ -25,4 +25,5 @@ Overview
    :caption: Documentation
 
    content/installation
+   content/usage
    content/deployment
