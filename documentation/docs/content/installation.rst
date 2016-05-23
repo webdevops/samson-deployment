@@ -20,6 +20,9 @@ Checkout from git:
     git clone https://github.com/webdevops/samson-deployment.git samson-deployment
     cd samson-deployment
 
+    # Link favorite docker-compose.*.yml to docker-compose.yml
+    ln -s docker-compose.local.yml docker-compose.yml
+
 
 Setup Samson
 ------------
