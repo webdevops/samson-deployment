@@ -18,8 +18,12 @@ COPY ssh/             /home/application/.ssh/
 
 COPY provision/       /opt/docker/provision/
 
-RUN bash /opt/docker/bin/control.sh provision.role.build samson-deployment \
+RUN /opt/docker/bin/provision run --tag build samson-deployment \
     && /opt/docker/bin/control.sh service.enable cron \
-    && bash /opt/docker/bin/bootstrap.sh
+    && /opt/docker/bin/bootstrap.sh
 
-VOLUME ["/tmp", "/storage"]
+# Enable Docker daemon
+# --> Also requies privileged mode in docker-compose.yml
+#RUN /opt/docker/bin/control.sh service.enable docker
+
+VOLUME ["/tmp", "/storage", "/var/lib/docker"]

@@ -8,3 +8,4 @@ services:
       - ./ansistrano/:/opt/ansistrano/
     env_file:
       - etc/environment.yml
+    #privileged: true

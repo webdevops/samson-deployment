@@ -77,6 +77,23 @@ It's also possible to setup ssh proxy server to reach server behind another serv
         ProxyCommand ssh ssh-gateway -W %h:%p
 
 
+Docker within deployment
+------------------------
+
+If you need Docker containers for deployment you have to use Docker privileged mode and enable the Docker daemon.
+
+First enable the privileged mode inside ``docker-compose.yml``::
+
+    privileged: true
+
+then you also have to enable Docker service inside ``Dockerfile``:
+
+.. code-block:: bash
+
+    # Enable Docker daemon
+    # --> Also requies privileged mode in docker-compose.yml
+    RUN /opt/docker/bin/control.sh service.enable docker
+
 Start Samson
 ------------
 

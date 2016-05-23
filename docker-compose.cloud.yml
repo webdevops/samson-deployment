@@ -6,3 +6,4 @@ services:
       - 9080:80
     env_file:
       - etc/environment.yml
+    #privileged: true
