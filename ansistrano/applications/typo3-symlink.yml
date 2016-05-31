@@ -23,6 +23,7 @@ deployment_permissions:
 
 # Tasks which are run for migration (release is not deployed to live yet)
 deployment_migration_tasks:
+  - mkdir -p web/typo3temp/GB web/typo3temp/pics web/typo3temp/temp web/typo3temp/compressor web/typo3temp/llxml web/typo3temp/_processed_
   - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:flush --force
   - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms cache:warmup
   - TYPO3_CONTEXT="{{ TYPO3_CONTEXT | default('Production') }}" php typo3cms database:updateschema '*.add,*.change'
