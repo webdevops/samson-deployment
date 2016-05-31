@@ -18,7 +18,7 @@ COPY ssh/             /home/application/.ssh/
 
 COPY provision/       /opt/docker/provision/
 
-RUN /opt/docker/bin/provision run --tag build samson-deployment \
+RUN /opt/docker/bin/provision run --tag build --role samson-deployment \
     && /opt/docker/bin/control.sh service.enable cron \
     && /opt/docker/bin/bootstrap.sh
 
