@@ -148,7 +148,11 @@ def runAnsiblePlaybook(args, local=False, playbook=False, foreground=True):
 def showSummary(args):
     maxLength = len(max(DEPLOYMENT_VARS.keys(), key=len))
     for key in DEPLOYMENT_VARS.keys():
-        print ' ' + key.rjust(maxLength, ' ') + ': ' + bcolors.YELLOW + DEPLOYMENT_VARS[key] + bcolors.ENDC
+        if DEPLOYMENT_VARS[key]:
+            print ' ' + key.rjust(maxLength, ' ') + ': ' + bcolors.YELLOW + DEPLOYMENT_VARS[key] + bcolors.ENDC
+        else:
+            print ' ' + key.rjust(maxLength, ' ') + ': ' + bcolors.WHITE + '<empty>' + bcolors.ENDC
+
     print ''
 
 
