@@ -1,6 +1,6 @@
 # Samson based deployment server
 
-[ZenDesk's](https://www.zendesk.com/) Deployment web ui with Ansible Ansistrano, Capistrano and PHP Deployer support
+[Zendesk's](https://www.zendesk.com/) deployment web ui with Ansible Ansistrano, Capistrano and PHP Deployer support
 
 Installed packages:
 * [Samson deployment web ui](https://github.com/zendesk/samson)
@@ -15,7 +15,7 @@ Installed packages:
 * PHP cli & [composer](https://getcomposer.org/)
 
 ### What?
-(from [ZenDesk/Samson repository](https://github.com/zendesk/samson))
+(from [zendesk/Samson repository](https://github.com/zendesk/samson))
 
 A web interface for deployments.
 
