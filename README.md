@@ -1,4 +1,4 @@
-# Samson based deployment server
+![Samson deployment](https://static.webdevops.io/samson-deployment.svg)
 
 [Zendesk's](https://www.zendesk.com/) deployment web ui with Ansible Ansistrano, Capistrano and PHP Deployer support
 
