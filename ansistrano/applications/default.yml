@@ -43,7 +43,7 @@ ansistrano_after_cleanup_tasks_file:  "{{ playbook_dir }}/tasks/teardown.yml"
 #############################
 
 # Set the deployment base directory (for running local tasks)
-deployment_base: "DEPLOYMENT_DEPLOY_FROM"
+deployment_base: "{{ DEPLOYMENT_DEPLOY_FROM }}"
 
 # Run defined Makefile task (on deployment server, before rsync)
 deployment_makefile_task: "build"
